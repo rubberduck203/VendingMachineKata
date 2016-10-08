@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Vending.Core;
 
 namespace Vending.Tests.Core
 {
@@ -7,8 +8,10 @@ namespace Vending.Tests.Core
     public class PriceStateTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void PriceState_Soda_Displays_OneDollar()
         {
+            var state = new PriceState();
+            Assert.AreEqual("PRICE: $1.00", state.Display());
         }
     }
 }

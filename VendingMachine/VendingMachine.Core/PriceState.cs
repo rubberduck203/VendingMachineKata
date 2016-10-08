@@ -8,6 +8,9 @@ namespace Vending.Core
 {
     public class PriceState
     {
-        
+        public string Display()
+        {
+            return "PRICE: $1.00";
+        }
     }
 }
