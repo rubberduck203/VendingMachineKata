@@ -10,58 +10,58 @@ namespace Vending.Tests.Core
     [TestClass]
     public class VendingMachineDispenseTests
     {
-        private VendingMachine vendingMachine;
+        private VendingMachine _vendingMachine;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            vendingMachine = new VendingMachine();
+            _vendingMachine = new VendingMachine();
         }
 
         [TestMethod]
         public void VendingMachine_GivenNoCoins_DisplayPrice()
         {
-            vendingMachine.Dispense("soda");
+            _vendingMachine.Dispense("soda");
 
-            Assert.AreEqual("PRICE: $1.00", vendingMachine.GetDisplayText());
+            Assert.AreEqual("PRICE: $1.00", _vendingMachine.GetDisplayText());
         }
 
         [TestMethod]
         public void VendingMachine_GivenADollarAndAskedForSoda_DisplayThankYou()
         {
-            InsertCoins(vendingMachine, Coin.Quarter, 4);
-            vendingMachine.Dispense("soda");
+            InsertCoins(_vendingMachine, Coin.Quarter, 4);
+            _vendingMachine.Dispense("soda");
 
-            Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
+            Assert.AreEqual("THANK YOU!", _vendingMachine.GetDisplayText());
         }
 
         [TestMethod]
         public void VendingMachine_GivenSomeCoinsButNotEnough_DisplayPrice()
         {
-            vendingMachine.Accept(Coin.Dime);
+            _vendingMachine.Accept(Coin.Dime);
 
-            vendingMachine.Dispense("soda");
+            _vendingMachine.Dispense("soda");
 
-            Assert.AreEqual("PRICE: $1.00", vendingMachine.GetDisplayText());
+            Assert.AreEqual("PRICE: $1.00", _vendingMachine.GetDisplayText());
         }
 
         [TestMethod]
         public void VendingMachine_GivenTooManyCoins_DisplayThankYou()
         {
-            InsertCoins(vendingMachine, Coin.Quarter, 5);
+            InsertCoins(_vendingMachine, Coin.Quarter, 5);
 
-            vendingMachine.Dispense("soda");
+            _vendingMachine.Dispense("soda");
 
-            Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
+            Assert.AreEqual("THANK YOU!", _vendingMachine.GetDisplayText());
         }
 
         [TestMethod]
         public void VendingMachine_GivenEnoughCoinsAndAskedForSoda_Dispense()
         {
-            InsertCoins(vendingMachine, Coin.Quarter, 5);
-            vendingMachine.Dispense("soda");
+            InsertCoins(_vendingMachine, Coin.Quarter, 5);
+            _vendingMachine.Dispense("soda");
 
-            Assert.AreEqual("soda", vendingMachine.Output.First());
+            Assert.AreEqual("soda", _vendingMachine.Output.First());
         }
 
         private void InsertCoins(VendingMachine machine, Coin coin, int count)
