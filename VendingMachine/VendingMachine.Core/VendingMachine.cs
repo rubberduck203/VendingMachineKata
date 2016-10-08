@@ -28,9 +28,9 @@ namespace Vending.Core
         public IEnumerable<Coin> ReturnTray => _returnTray;
         public IEnumerable<string> Output => _output;
 
-        public void Dispense(string soda)
+        public void Dispense(string sku)
         {
-            var priceInCents = _productInfoRepository.GetPrice(soda);
+            var priceInCents = _productInfoRepository.GetPrice(sku);
             var currentTotal = _machineState.CurrentTotal(_coins);
 
             if (currentTotal < priceInCents)
@@ -39,7 +39,7 @@ namespace Vending.Core
             }
             else
             {
-                _output.Add(soda);
+                _output.Add(sku);
                 _machineState = new ThankYouState();
 
                 _coins.Clear();
