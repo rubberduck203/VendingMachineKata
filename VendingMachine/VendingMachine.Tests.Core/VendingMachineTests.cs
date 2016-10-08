@@ -82,17 +82,11 @@ namespace Vending.Tests.Core
         }
 
         [TestMethod]
-        public void VendingMachine_GivenAPenny_Displays_InsertCoin()
+        public void VendingMachine_GivenAPenny_Reject()
         {
-            _vendingMachine.Accept(Coin.Penny);
-            Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
-        }
-
-        [TestMethod]
-        public void VendingMachine_GivenAPenny_ReturnTrayContainsAPenny()
-        {
-            _vendingMachine.Accept(Coin.Penny);
-            Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == Coin.Penny));
+            const Coin coin = Coin.Penny;
+            _vendingMachine.Accept(coin);
+            AssertRejection(coin);
         }
 
         [TestMethod]
@@ -103,9 +97,9 @@ namespace Vending.Tests.Core
              *  For now, we need to treat these like pennies so we don't get exceptions.
              */
 
-            _vendingMachine.Accept(Coin.FiftyCentPiece);
-            Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
-            Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == Coin.FiftyCentPiece));
+            const Coin coin = Coin.FiftyCentPiece;
+            _vendingMachine.Accept(coin);
+            AssertRejection(coin);
         }
 
         [TestMethod]
@@ -115,10 +109,23 @@ namespace Vending.Tests.Core
              * note: There's a call out to the client to see if we should support these.
              *  For now, we need to treat these like pennies so we don't get exceptions.
              */
+            const Coin coin = Coin.Dollar;
+            _vendingMachine.Accept(coin);
+            AssertRejection(coin);
+        }
 
-            _vendingMachine.Accept(Coin.Dollar);
+        [Ignore]
+        [TestMethod]
+        public void VendingMachine_GivenNotACoin_Reject()
+        {
+            _vendingMachine.Accept((Coin)42);
+          
+        }
+
+        private void AssertRejection(Coin coin)
+        {
             Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
-            Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == Coin.Dollar));
+            Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == coin));
         }
     }
 }
