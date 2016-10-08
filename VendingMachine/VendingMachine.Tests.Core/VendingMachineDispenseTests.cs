@@ -10,10 +10,17 @@ namespace Vending.Tests.Core
     [TestClass]
     public class VendingMachineDispenseTests
     {
+        private VendingMachine vendingMachine;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            vendingMachine = new VendingMachine();
+        }
+
         [TestMethod]
         public void VendingMachine_GivenNoCoins_DisplayPrice()
         {
-            var vendingMachine = new VendingMachine();
             vendingMachine.Dispense("soda");
 
             Assert.AreEqual("PRICE: $1.00", vendingMachine.GetDisplayText());
@@ -22,8 +29,6 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachine_GivenADollarAndAskedForSoda_DisplayThankYou()
         {
-            var vendingMachine = new VendingMachine();
-
             InsertCoins(vendingMachine, Coin.Quarter, 4);
             vendingMachine.Dispense("soda");
 
@@ -33,7 +38,6 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachine_GivenSomeCoinsButNotEnough_DisplayPrice()
         {
-            var vendingMachine = new VendingMachine();
             vendingMachine.Accept(Coin.Dime);
 
             vendingMachine.Dispense("soda");
@@ -44,8 +48,6 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachine_GivenTooManyCoins_DisplayThankYou()
         {
-            var vendingMachine = new VendingMachine();
-
             InsertCoins(vendingMachine, Coin.Quarter, 5);
 
             vendingMachine.Dispense("soda");
