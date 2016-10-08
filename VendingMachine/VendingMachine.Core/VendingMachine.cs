@@ -20,7 +20,9 @@ namespace Vending.Core
                 return "INSERT COIN";
             }
 
-            return "$0.05";
+            //note: can't just _coins.Sum because coins don't know their value
+            var total = (_coins.Count*5.0)/100;
+            return $"{total:C}";
         }
 
         public void Accept(Coin coin)

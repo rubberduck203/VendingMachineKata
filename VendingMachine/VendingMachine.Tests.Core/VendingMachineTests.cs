@@ -28,6 +28,14 @@ namespace Vending.Tests.Core
             Assert.AreEqual("$0.05", _vendingMachine.GetDisplayText());
         }
 
+        [TestMethod]
+        public void VendingMachine_GivenTwoNickels_Displays_10()
+        {
+            _vendingMachine.Accept(Coin.Nickel);
+            _vendingMachine.Accept(Coin.Nickel);
+            Assert.AreEqual("$0.10", _vendingMachine.GetDisplayText());
+        }
+
 
     }
 }
