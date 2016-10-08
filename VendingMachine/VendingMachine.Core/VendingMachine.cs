@@ -30,13 +30,10 @@ namespace Vending.Core
         private decimal CurrentTotal()
         {
             //note: can't just _coins.Sum because coins don't know their value
-            var nickels = _coins.Count(c => c == Coin.Nickel);
-            var dimes = _coins.Count(c => c == Coin.Dime);
+            decimal nickels = _coins.Count(c => c == Coin.Nickel) * 5.0m;
+            decimal dimes = _coins.Count(c => c == Coin.Dime) * 10.0m;
 
-            decimal nickelsValue = nickels*5.0m;
-            decimal dimesValue = dimes*10.0m;
-
-            return (nickelsValue + dimesValue)/100;
+            return (nickels + dimes)/100;
         }
 
         public void Accept(Coin coin)
