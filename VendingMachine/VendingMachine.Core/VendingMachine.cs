@@ -12,11 +12,14 @@ namespace Vending.Core
     {
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
+        private readonly List<string> _output = new List<string>();
 
         public IEnumerable<Coin> ReturnTray => _returnTray;
+        public IEnumerable<string> Output => _output;
 
-        public void Dispense(string soda)
+        public void Dispense(string sku)
         {
+            _output.Add(sku);
         }
 
         public void Accept(Coin coin)
