@@ -93,12 +93,14 @@ namespace Vending.Tests.Core
             var expected = Enumerable.Repeat((int)Coin.Nickel, 2).ToList();
             CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
         }
-
-        [Ignore]
+        
         [TestMethod]
         public void VendingMachine_Given2QuartersAndAskedForCandy_DisplayPrice()
         {
+            InsertCoins(_vendingMachine, Coin.Quarter, 2);
+            _vendingMachine.Dispense("candy");
 
+            Assert.AreEqual("PRICE: $0.65", _vendingMachine.GetDisplayText());
         }
 
         private void InsertCoins(VendingMachine machine, Coin coin, int count)

@@ -32,9 +32,10 @@ namespace Vending.Core
         {
             var priceInCents = _productInfoRepository.GetPrice(soda);
             var currentTotal = _machineState.CurrentTotal(_coins);
+
             if (currentTotal < priceInCents)
             {
-                _machineState = new PriceState();
+                _machineState = new PriceState(priceInCents.Value);
             }
             else
             {

@@ -10,7 +10,7 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void PriceState_Soda_Displays_OneDollar()
         {
-            VendingMachineState state = new PriceState();
+            VendingMachineState state = new PriceState(100);
             Assert.AreEqual("PRICE: $1.00", state.Display());
         }
 
