@@ -11,7 +11,7 @@ namespace Vending.Core
 
     public class VendingMachine
     {
-        List<Coin> _coins = new List<Coin>();
+        private readonly List<Coin> _coins = new List<Coin>();
 
         public string GetDisplayText()
         {
@@ -26,7 +26,7 @@ namespace Vending.Core
         private decimal CurrentTotal()
         {
             //note: can't just _coins.Sum because coins don't know their value
-            return (_coins.Count*5.0m)/100;
+            return (_coins.Count * 5.0m) / 100;
         }
 
         public void Accept(Coin coin)
