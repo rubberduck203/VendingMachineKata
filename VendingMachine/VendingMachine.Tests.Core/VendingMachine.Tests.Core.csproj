@@ -6,8 +6,8 @@
     <ProjectGuid>{C154E694-F030-4C8F-80A2-BF8EDB3D875A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VendingMachine.Tests.Core</RootNamespace>
-    <AssemblyName>VendingMachine.Tests.Core</AssemblyName>
+    <RootNamespace>Vending.Tests.Core</RootNamespace>
+    <AssemblyName>Vending.Tests.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,8 +51,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="VendingMachineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VendingMachine.Core\VendingMachine.Core.csproj">
+      <Project>{1444f79a-e02b-4f21-9f8c-850f89b2a207}</Project>
+      <Name>VendingMachine.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

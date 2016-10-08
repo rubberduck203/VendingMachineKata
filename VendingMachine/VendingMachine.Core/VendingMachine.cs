@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vending
+namespace Vending.Core
 {
-    class Program
+    public class VendingMachine
     {
-        static void Main(string[] args)
-        {
-        }
     }
 }

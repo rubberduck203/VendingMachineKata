@@ -7,7 +7,7 @@
     <ProjectGuid>{2C693EF0-178B-4D7D-AE15-B3EA3130C94C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VendingMachine</RootNamespace>
+    <RootNamespace>Vending</RootNamespace>
     <AssemblyName>VendingMachine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
