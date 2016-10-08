@@ -22,18 +22,11 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachine_GivenADollarAndAskedForSoda_DisplayThankYou()
         {
-            //arrange
             var vendingMachine = new VendingMachine();
 
-            for (int i = 0; i < 4; i++)
-            {
-                vendingMachine.Accept(Coin.Quarter);
-            }
-
-            //act
+            InsertCoins(vendingMachine, Coin.Quarter, 4);
             vendingMachine.Dispense("soda");
 
-            //assert
             Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
         }
 
@@ -53,14 +46,19 @@ namespace Vending.Tests.Core
         {
             var vendingMachine = new VendingMachine();
 
-            for (int i = 0; i < 5; i++)
-            {
-                vendingMachine.Accept(Coin.Quarter);
-            }
+            InsertCoins(vendingMachine, Coin.Quarter, 5);
 
             vendingMachine.Dispense("soda");
 
             Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
+        }
+
+        private void InsertCoins(VendingMachine machine, Coin coin, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                machine.Accept(coin);
+            }
         }
     }
 }
