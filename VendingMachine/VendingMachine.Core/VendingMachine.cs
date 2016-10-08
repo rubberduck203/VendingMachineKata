@@ -10,6 +10,7 @@ namespace Vending.Core
 {
     public enum Coin
     {
+        Penny,
         Nickel,
         Dime,
         Quarter
@@ -18,9 +19,18 @@ namespace Vending.Core
     public class VendingMachine
     {
         private readonly List<Coin> _coins = new List<Coin>();
+        private readonly List<Coin> _returnTray = new List<Coin>();
+
+        public IEnumerable<Coin> ReturnTray => _returnTray;
 
         public void Accept(Coin coin)
         {
+            if (coin == Coin.Penny)
+            {
+                _returnTray.Add(coin);
+                return;
+            }
+
             _coins.Add(coin);
         }
 

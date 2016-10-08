@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Vending.Core;
 
@@ -78,6 +79,20 @@ namespace Vending.Tests.Core
             }
 
             Assert.AreEqual("$1.35", _vendingMachine.GetDisplayText());
+        }
+
+        [TestMethod]
+        public void VendingMachine_GivenAPenny_Displays_InsertCoin()
+        {
+            _vendingMachine.Accept(Coin.Penny);
+            Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
+        }
+
+        [TestMethod]
+        public void VendingMachine_GivenAPenny_ReturnTrayContainsAPenny()
+        {
+            _vendingMachine.Accept(Coin.Penny);
+            Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == Coin.Penny));
         }
     }
 }
