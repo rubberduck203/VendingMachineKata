@@ -11,6 +11,7 @@ namespace Vending.Tests.Core
         public void VendingMachine_OnStartUp_Displays_InsertCoin()
         {
             var vendingMachine = new VendingMachine();
+            Assert.AreEqual("INSERT COIN", vendingMachine.Display);
         }
     }
 }

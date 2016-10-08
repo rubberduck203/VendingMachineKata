@@ -8,5 +8,6 @@ namespace Vending.Core
 {
     public class VendingMachine
     {
+        public string Display => "INSERT COIN";
     }
 }
