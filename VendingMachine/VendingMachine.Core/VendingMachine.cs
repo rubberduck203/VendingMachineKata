@@ -12,6 +12,13 @@ namespace Vending.Core
 {
     public class VendingMachine
     {
+        private readonly ProductInfoRepository _productInfoRepository;
+
+        public VendingMachine(ProductInfoRepository productInfoRepository)
+        {
+            _productInfoRepository = productInfoRepository;
+        }
+
         private VendingMachineState _machineState = new InsertCoinState();
 
         private readonly List<Coin> _coins = new List<Coin>();
@@ -23,7 +30,8 @@ namespace Vending.Core
 
         public void Dispense(string soda)
         {
-            const int priceInCents = 100; //soda
+            var priceInCents = _productInfoRepository.GetPrice(soda);
+            //const int priceInCents = 100; //soda
             if (_machineState.CurrentTotal(_coins) < priceInCents)
             {
                 _machineState = new PriceState();

@@ -13,7 +13,7 @@ namespace Vending.Tests.Core
         [TestInitialize]
         public void TestInitialize()
         {
-            _vendingMachine = new VendingMachine();
+            _vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
         }
 
         [TestMethod]

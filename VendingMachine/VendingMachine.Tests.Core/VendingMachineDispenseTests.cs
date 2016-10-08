@@ -15,7 +15,7 @@ namespace Vending.Tests.Core
         [TestInitialize]
         public void TestInitialize()
         {
-            _vendingMachine = new VendingMachine();
+            _vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
         }
 
         [TestMethod]
@@ -76,10 +76,27 @@ namespace Vending.Tests.Core
             // Force state change.
             _vendingMachine.GetDisplayText();
 
-            var expected = Enumerable.Repeat((int) Coin.Quarter, 2).ToList();
+            var expected = Enumerable.Repeat((int)Coin.Quarter, 2).ToList();
             CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
 
             Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
+        }
+
+        [TestMethod]
+        public void VendingMachine_Given3QuartersAndAskedForCandy_ReturnADime()
+        {
+            InsertCoins(_vendingMachine, Coin.Quarter, 3);
+            _vendingMachine.Dispense("candy");
+
+            var expected = new List<int>() { (int)Coin.Dime };
+            CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
+        }
+
+        [Ignore]
+        [TestMethod]
+        public void VendingMachine_Given2QuartersAndAskedForCandy_DisplayPrice()
+        {
+
         }
 
         private void InsertCoins(VendingMachine machine, Coin coin, int count)
