@@ -8,16 +8,6 @@ using System.Threading.Tasks;
 
 namespace Vending.Core
 {
-    public enum Coin
-    {
-        Penny,
-        Nickel,
-        Dime,
-        Quarter,
-        FiftyCentPiece,
-        Dollar
-    }
-
     public class VendingMachine
     {
         private readonly List<Coin> _coins = new List<Coin>();
