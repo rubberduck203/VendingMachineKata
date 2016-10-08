@@ -12,11 +12,16 @@ namespace Vending.Core
     {
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
+        private bool _displayPrice;
 
         public IEnumerable<Coin> ReturnTray => _returnTray;
 
         public void Dispense(string soda)
         {
+            if (!_coins.Any())
+            {
+                _displayPrice = true;
+            }
         }
 
         public void Accept(Coin coin)
@@ -32,6 +37,12 @@ namespace Vending.Core
 
         public string GetDisplayText()
         {
+            if (_displayPrice)
+            {
+                _displayPrice = false;
+                return "PRICE: $1.00";
+            }
+
             if (!_coins.Any())
             {
                 return "INSERT COIN";
@@ -57,7 +68,7 @@ namespace Vending.Core
             decimal total = 0;
             foreach (var coinCount in counts)
             {
-                total += (coinCount.Value * coinCount.Key.Value()); 
+                total += (coinCount.Value * coinCount.Key.Value());
             }
 
             return ConvertCentsToDollars(total);
