@@ -6,7 +6,7 @@ using Vending.Core;
 namespace Vending.Tests.Core
 {
     [TestClass]
-    public class VendingMachineTests
+    public class VendingMachineCoinInsertionTests
     {
         private VendingMachine _vendingMachine;
 

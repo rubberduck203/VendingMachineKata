@@ -15,6 +15,10 @@ namespace Vending.Core
 
         public IEnumerable<Coin> ReturnTray => _returnTray;
 
+        public void Dispense(string soda)
+        {
+        }
+
         public void Accept(Coin coin)
         {
             if (coin.Value() == 0)
