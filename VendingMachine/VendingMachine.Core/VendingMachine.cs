@@ -12,7 +12,7 @@ namespace Vending.Core
     {
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
-        private bool _displayPrice;
+        private VendingMachineState _machineState = new InsertCoinState();
 
         public IEnumerable<Coin> ReturnTray => _returnTray;
 
@@ -20,7 +20,7 @@ namespace Vending.Core
         {
             if (!_coins.Any())
             {
-                _displayPrice = true;
+                _machineState = new PriceState();
             }
         }
 
@@ -37,15 +37,9 @@ namespace Vending.Core
 
         public string GetDisplayText()
         {
-            if (_displayPrice)
-            {
-                _displayPrice = false;
-                return "PRICE: $1.00";
-            }
-
             if (!_coins.Any())
             {
-                return "INSERT COIN";
+                return _machineState.Display();
             }
 
             return $"{CurrentTotal():C}";
