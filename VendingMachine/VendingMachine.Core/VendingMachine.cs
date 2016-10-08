@@ -17,7 +17,7 @@ namespace Vending.Core
 
         public void Accept(Coin coin)
         {
-            if (GetCoinValue(coin) == 0)
+            if (coin.Value() == 0)
             {
                 _returnTray.Add(coin);
                 return;
@@ -53,7 +53,7 @@ namespace Vending.Core
             decimal total = 0;
             foreach (var coinCount in counts)
             {
-                total += (coinCount.Value * GetCoinValue(coinCount.Key));
+                total += (coinCount.Value * coinCount.Key.Value()); 
             }
 
             return ConvertCentsToDollars(total);
@@ -62,21 +62,6 @@ namespace Vending.Core
         private static decimal ConvertCentsToDollars(decimal total)
         {
             return total / 100;
-        }
-
-        private static int GetCoinValue(Coin coinType)
-        {
-            switch (coinType)
-            {
-                case Coin.Nickel:
-                    return 5;
-                case Coin.Dime:
-                    return 10;
-                case Coin.Quarter:
-                    return 25;
-                default:
-                    return 0;
-            }
         }
     }
 }
