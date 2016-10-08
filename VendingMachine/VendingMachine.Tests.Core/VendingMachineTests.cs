@@ -94,5 +94,18 @@ namespace Vending.Tests.Core
             _vendingMachine.Accept(Coin.Penny);
             Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == Coin.Penny));
         }
+
+        [TestMethod]
+        public void VendingMachine_GivenAFiftyCentPiece_Reject()
+        {
+            /*
+             * note: There's a call out to the client to see if we should support these.
+             *  For now, we need to treat these like pennies so we don't get exceptions.
+             */
+
+            _vendingMachine.Accept(Coin.FiftyCentPiece);
+            Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
+            Assert.AreEqual(1, _vendingMachine.ReturnTray.Count(c => c == Coin.FiftyCentPiece));
+        }
     }
 }
