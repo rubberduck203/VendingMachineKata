@@ -47,5 +47,20 @@ namespace Vending.Tests.Core
 
             Assert.AreEqual("PRICE: $1.00", vendingMachine.GetDisplayText());
         }
+
+        [TestMethod]
+        public void VendingMachine_GivenTooManyCoins_DisplayThankYou()
+        {
+            var vendingMachine = new VendingMachine();
+
+            for (int i = 0; i < 5; i++)
+            {
+                vendingMachine.Accept(Coin.Quarter);
+            }
+
+            vendingMachine.Dispense("soda");
+
+            Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
+        }
     }
 }
