@@ -36,6 +36,14 @@ namespace Vending.Tests.Core
             Assert.AreEqual("$0.10", _vendingMachine.GetDisplayText());
         }
 
+        [TestMethod]
+        public void VendingMachine_GivenANickelAndADime_Displays_15()
+        {
+            _vendingMachine.Accept(Coin.Nickel);
+            _vendingMachine.Accept(Coin.Dime);
+            Assert.AreEqual("$0.15", _vendingMachine.GetDisplayText());
+        }
+
 
     }
 }

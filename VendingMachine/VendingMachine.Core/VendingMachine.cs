@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace Vending.Core
 {
-    public enum Coin { Nickel }
+    public enum Coin
+    {
+        Nickel,
+        Dime
+    }
 
     public class VendingMachine
     {
@@ -26,7 +30,13 @@ namespace Vending.Core
         private decimal CurrentTotal()
         {
             //note: can't just _coins.Sum because coins don't know their value
-            return (_coins.Count * 5.0m) / 100;
+            var nickels = _coins.Count(c => c == Coin.Nickel);
+            var dimes = _coins.Count(c => c == Coin.Dime);
+
+            decimal nickelsValue = nickels*5.0m;
+            decimal dimesValue = dimes*10.0m;
+
+            return (nickelsValue + dimesValue)/100;
         }
 
         public void Accept(Coin coin)
