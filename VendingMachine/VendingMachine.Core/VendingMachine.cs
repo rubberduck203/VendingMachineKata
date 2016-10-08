@@ -23,10 +23,10 @@ namespace Vending.Core
             return $"{CurrentTotal():C}";
         }
 
-        private double CurrentTotal()
+        private decimal CurrentTotal()
         {
             //note: can't just _coins.Sum because coins don't know their value
-            return (_coins.Count*5.0)/100;
+            return (_coins.Count*5.0m)/100;
         }
 
         public void Accept(Coin coin)
