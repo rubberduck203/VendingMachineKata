@@ -80,7 +80,7 @@ namespace Vending.Core
                 while (refund > 0)
                 {
                     _returnTray.Add(Coin.Nickel);
-                    refund -= 5;
+                    refund -= Coin.Nickel.Value();
                 }
             }
         }
