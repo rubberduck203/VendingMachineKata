@@ -55,6 +55,15 @@ namespace Vending.Tests.Core
             Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
         }
 
+        [TestMethod]
+        public void VendingMachine_GivenEnoughCoinsAndAskedForSoda_Dispense()
+        {
+            InsertCoins(vendingMachine, Coin.Quarter, 5);
+            vendingMachine.Dispense("soda");
+
+            Assert.AreEqual("soda", vendingMachine.Output.First());
+        }
+
         private void InsertCoins(VendingMachine machine, Coin coin, int count)
         {
             for (int i = 0; i < count; i++)

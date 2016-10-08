@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,11 +12,14 @@ namespace Vending.Core
 {
     public class VendingMachine
     {
-        private readonly List<Coin> _coins = new List<Coin>();
-        private readonly List<Coin> _returnTray = new List<Coin>();
         private VendingMachineState _machineState = new InsertCoinState();
 
+        private readonly List<Coin> _coins = new List<Coin>();
+        private readonly List<Coin> _returnTray = new List<Coin>();
+        private readonly List<string> _output = new List<string>();
+        
         public IEnumerable<Coin> ReturnTray => _returnTray;
+        public IEnumerable<string> Output => _output;
 
         public void Dispense(string soda)
         {
@@ -26,6 +30,7 @@ namespace Vending.Core
             }
             else
             {
+                _output.Add(soda);
                 _machineState = new ThankYouState();
             }
         }
