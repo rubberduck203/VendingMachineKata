@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +23,10 @@ namespace Vending.Core
             {
                 _machineState = new PriceState();
             }
+            else
+            {
+                _machineState = new ThankYouState();
+            }
         }
 
         public void Accept(Coin coin)
@@ -33,19 +38,35 @@ namespace Vending.Core
             }
 
             _coins.Add(coin);
+            _machineState = new CurrentValueState(_coins);
         }
 
         public string GetDisplayText()
         {
-            if (!_coins.Any())
-            {
-                return _machineState.Display();
-            }
+            //if (!_coins.Any())
+            //{
+            //    return _machineState.Display();
+            //}
 
-            return $"{CurrentTotal():C}";
+            return _machineState.Display();
+        }
+    }
+
+    public class CurrentValueState : VendingMachineState
+    {
+        private readonly IEnumerable<Coin> _coins;
+
+        public CurrentValueState(IEnumerable<Coin> coins)
+        {
+            _coins = coins;
         }
 
-        private decimal CurrentTotal()
+        public string Display()
+        {
+            return $"{CurrentTotal(_coins):C}";
+        }
+
+        private static decimal CurrentTotal(IEnumerable<Coin> coins)
         {
             var counts = new Dictionary<Coin, int>()
             {
@@ -54,7 +75,7 @@ namespace Vending.Core
                 {Coin.Quarter, 0}
             };
 
-            foreach (var coin in _coins)
+            foreach (var coin in coins)
             {
                 counts[coin]++;
             }
