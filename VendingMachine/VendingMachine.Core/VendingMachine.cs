@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Vending.Core
 {
+    public enum Coin { Nickel }
+
     public class VendingMachine
     {
         List<Coin> _coins = new List<Coin>();
@@ -29,7 +31,4 @@ namespace Vending.Core
             _coins.Add(coin);
         }
     }
-
-    public enum Coin { Nickel }
-
 }
