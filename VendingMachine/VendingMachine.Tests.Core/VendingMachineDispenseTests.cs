@@ -36,5 +36,16 @@ namespace Vending.Tests.Core
             //assert
             Assert.AreEqual("THANK YOU!", vendingMachine.GetDisplayText());
         }
+
+        [TestMethod]
+        public void VendingMachine_GivenSomeCoinsButNotEnough_DisplayPrice()
+        {
+            var vendingMachine = new VendingMachine();
+            vendingMachine.Accept(Coin.Dime);
+
+            vendingMachine.Dispense("soda");
+
+            Assert.AreEqual("PRICE: $1.00", vendingMachine.GetDisplayText());
+        }
     }
 }

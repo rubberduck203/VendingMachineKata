@@ -8,7 +8,7 @@ namespace Vending.Core
 {
     public class ThankYouState : VendingMachineState
     {
-        public string Display()
+        public override string Display()
         {
             return "THANK YOU!";
         }

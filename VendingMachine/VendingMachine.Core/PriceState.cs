@@ -8,7 +8,7 @@ namespace Vending.Core
 {
     public class PriceState : VendingMachineState
     {
-        public string Display()
+        public override string Display()
         {
             return "PRICE: $1.00";
         }

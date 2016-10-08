@@ -19,7 +19,8 @@ namespace Vending.Core
 
         public void Dispense(string soda)
         {
-            if (!_coins.Any())
+            const int priceInCents = 100; //soda
+            if (_machineState.CurrentTotal(_coins) < priceInCents)
             {
                 _machineState = new PriceState();
             }
@@ -43,11 +44,6 @@ namespace Vending.Core
 
         public string GetDisplayText()
         {
-            //if (!_coins.Any())
-            //{
-            //    return _machineState.Display();
-            //}
-
             return _machineState.Display();
         }
     }
