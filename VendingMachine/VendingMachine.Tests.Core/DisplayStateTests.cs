@@ -5,13 +5,20 @@ using Vending.Core;
 namespace Vending.Tests.Core
 {
     [TestClass]
-    public class PriceStateTests
+    public class DisplayStateTests
     {
         [TestMethod]
         public void PriceState_Soda_Displays_OneDollar()
         {
             var state = new PriceState();
             Assert.AreEqual("PRICE: $1.00", state.Display());
+        }
+
+        [TestMethod]
+        public void InsertCoinState_Displays_InsertCoin()
+        {
+            var state = new InsertCoinState();
+            Assert.AreEqual("INSERT COIN", state.Display());
         }
     }
 }
