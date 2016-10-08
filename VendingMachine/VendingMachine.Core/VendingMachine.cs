@@ -33,7 +33,7 @@ namespace Vending.Core
                 _output.Add(soda);
                 _machineState = new ThankYouState();
 
-                //_coins.Clear();
+                _coins.Clear();
 
                 //hardcoded for test
                 _returnTray.Add(Coin.Quarter);
@@ -55,7 +55,14 @@ namespace Vending.Core
 
         public string GetDisplayText()
         {
-            return _machineState.Display();
+            var text = _machineState.Display();
+
+            if (_machineState is ThankYouState)
+            {
+                _machineState = new InsertCoinState();
+            }
+
+            return text;
         }
     }
 }

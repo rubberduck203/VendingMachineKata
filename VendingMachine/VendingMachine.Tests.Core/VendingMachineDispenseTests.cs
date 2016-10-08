@@ -67,15 +67,19 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachine_AfterDispensing_CoinsAreReturned()
         {
+            // The thank you message should only show once. 
+            // Be sure to return any extra coins and set us back to base state
+
             InsertCoins(_vendingMachine, Coin.Quarter, 6);
             _vendingMachine.Dispense("soda");
+
+            // Force state change.
+            _vendingMachine.GetDisplayText();
 
             var expected = Enumerable.Repeat((int) Coin.Quarter, 2).ToList();
             CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
 
-            //force state change
-           // _vendingMachine.GetDisplayText();
-            
+            Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
         }
 
         private void InsertCoins(VendingMachine machine, Coin coin, int count)
