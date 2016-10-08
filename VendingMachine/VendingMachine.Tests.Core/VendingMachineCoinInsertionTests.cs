@@ -6,14 +6,14 @@ using Vending.Core;
 namespace Vending.Tests.Core
 {
     [TestClass]
-    public class VendingMachineTests
+    public class VendingMachineCoinInsertionTests
     {
         private VendingMachine _vendingMachine;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _vendingMachine = new VendingMachine();
+            _vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
         }
 
         [TestMethod]

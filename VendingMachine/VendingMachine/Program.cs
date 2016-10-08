@@ -20,7 +20,7 @@ namespace Vending
             Console.WriteLine("[3] - Quarter");
             Console.WriteLine();
 
-            var vendingMachine = new VendingMachine();
+            var vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
 
             Console.WriteLine(vendingMachine.GetDisplayText());
 

@@ -14,3 +14,8 @@ Being we're building a state machine, I suspect we'll make use of the state patt
   [3]:https://en.wikipedia.org/wiki/Finite-state_machine
   [4]:https://www.youtube.com/watch?v=vhiiia1_hC4
 
+The following display states exist:
+ 1. Price
+ 2. Thank you!
+ 3. Insert Coin
+ 4. Current Total

@@ -39,8 +39,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coin.cs" />
+    <Compile Include="CurrentValueState.cs" />
+    <Compile Include="InMemoryProductInfoRepository.cs" />
+    <Compile Include="InsertCoinState.cs" />
+    <Compile Include="PriceState.cs" />
+    <Compile Include="ProductInfoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ThankYouState.cs" />
     <Compile Include="VendingMachine.cs" />
+    <Compile Include="VendingMachineState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
