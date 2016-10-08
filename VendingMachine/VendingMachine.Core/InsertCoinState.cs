@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vending.Core
 {
-    public class InsertCoinState
+    public class InsertCoinState : VendingMachineState
     {
         public string Display()
         {

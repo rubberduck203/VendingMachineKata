@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Vending.Core
 {
-    public class PriceState : VendingMachineState
+    public interface VendingMachineState
     {
-        public string Display()
-        {
-            return "PRICE: $1.00";
-        }
+        string Display();
     }
 }
