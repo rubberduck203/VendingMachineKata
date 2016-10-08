@@ -114,12 +114,12 @@ namespace Vending.Tests.Core
             AssertRejection(coin);
         }
 
-        [Ignore]
         [TestMethod]
         public void VendingMachine_GivenNotACoin_Reject()
         {
-            _vendingMachine.Accept((Coin)42);
-          
+            const Coin coin = (Coin) 42;
+            _vendingMachine.Accept(coin);
+            AssertRejection(coin);
         }
 
         private void AssertRejection(Coin coin)
