@@ -44,15 +44,7 @@ namespace Vending.Core
 
                 _coins.Clear();
 
-                if (currentTotal > priceInCents)
-                {
-                    var refund = currentTotal - priceInCents;
-                    while (refund > 0)
-                    {
-                        _returnTray.Add(Coin.Nickel);
-                        refund -= 5;
-                    }
-                }
+                Refund(currentTotal, priceInCents);
             }
         }
 
@@ -78,6 +70,19 @@ namespace Vending.Core
             }
 
             return text;
+        }
+
+        private void Refund(int currentTotal, int? priceInCents)
+        {
+            if (currentTotal > priceInCents)
+            {
+                var refund = currentTotal - priceInCents;
+                while (refund > 0)
+                {
+                    _returnTray.Add(Coin.Nickel);
+                    refund -= 5;
+                }
+            }
         }
     }
 }
