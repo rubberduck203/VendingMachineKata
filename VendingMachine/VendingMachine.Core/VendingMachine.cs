@@ -19,6 +19,11 @@ namespace Vending.Core
     {
         private readonly List<Coin> _coins = new List<Coin>();
 
+        public void Accept(Coin coin)
+        {
+            _coins.Add(coin);
+        }
+
         public string GetDisplayText()
         {
             if (!_coins.Any())
@@ -70,11 +75,6 @@ namespace Vending.Core
                 default:
                     return 0;
             }
-        }
-
-        public void Accept(Coin coin)
-        {
-            _coins.Add(coin);
         }
     }
 }
