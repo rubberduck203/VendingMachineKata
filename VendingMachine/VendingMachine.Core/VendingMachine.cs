@@ -30,12 +30,19 @@ namespace Vending.Core
 
         private decimal CurrentTotal()
         {
-            //note: I don't like this. Looping over the collection multiple times. Store in dicitonary?
-            decimal nickels = _coins.Count(c => c == Coin.Nickel) * 5.0m;
-            decimal dimes = _coins.Count(c => c == Coin.Dime) * 10.0m;
-            decimal quarters = _coins.Count(c => c == Coin.Quarter) * 25.0m;
+            var counts = new Dictionary<Coin, int>()
+            {
+                {Coin.Nickel, 0},
+                {Coin.Dime, 0},
+                {Coin.Quarter, 0}
+            };
 
-            return (nickels + dimes + quarters) / 100;
+            foreach (var coin in _coins)
+            {
+                counts[coin]++;
+            }
+
+            return (counts[Coin.Nickel] * 5.0m + counts[Coin.Dime] * 10.0m + counts[Coin.Quarter] * 25.0m) / 100;
         }
 
         public void Accept(Coin coin)
