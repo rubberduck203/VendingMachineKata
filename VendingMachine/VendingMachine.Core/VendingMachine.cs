@@ -46,26 +46,29 @@ namespace Vending.Core
             decimal total = 0;
             foreach (var coinCount in counts)
             {
-                total += (coinCount.Value * CoinValue(coinCount.Key));
+                total += (coinCount.Value * GetCoinValue(coinCount.Key));
             }
 
-            return total/100;
-
-            //return (counts[Coin.Nickel] * 5.0m + counts[Coin.Dime] * 10.0m + counts[Coin.Quarter] * 25.0m) / 100;
+            return ConvertCentsToDollars(total);
         }
 
-        private decimal CoinValue(Coin coinType)
+        private static decimal ConvertCentsToDollars(decimal total)
+        {
+            return total / 100;
+        }
+
+        private static int GetCoinValue(Coin coinType)
         {
             switch (coinType)
             {
                 case Coin.Nickel:
-                    return 5.0m;
+                    return 5;
                 case Coin.Dime:
-                    return 10.0m;
+                    return 10;
                 case Coin.Quarter:
-                    return 25.0m;
+                    return 25;
                 default:
-                    return 0.0m;
+                    return 0;
             }
         }
 
