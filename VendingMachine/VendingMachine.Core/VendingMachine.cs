@@ -13,17 +13,14 @@ namespace Vending.Core
     {
         List<Coin> _coins = new List<Coin>();
 
-        public string Display
+        public string GetDisplayText()
         {
-            get
+            if (!_coins.Any())
             {
-                if (!_coins.Any())
-                {
-                    return "INSERT COIN";
-                }
-
-                return "5";
+                return "INSERT COIN";
             }
+
+            return "5";
         }
 
         public void Accept(Coin coin)
