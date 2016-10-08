@@ -25,7 +25,7 @@ namespace Vending.Tests.Core
         public void VendingMachine_GivenANickel_Displays_5()
         {
             _vendingMachine.Accept(Coin.Nickel);
-            Assert.AreEqual("5", _vendingMachine.GetDisplayText());
+            Assert.AreEqual("$0.05", _vendingMachine.GetDisplayText());
         }
 
 

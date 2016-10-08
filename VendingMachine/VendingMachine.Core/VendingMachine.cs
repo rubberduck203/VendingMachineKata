@@ -20,7 +20,7 @@ namespace Vending.Core
                 return "INSERT COIN";
             }
 
-            return "5";
+            return "$0.05";
         }
 
         public void Accept(Coin coin)
