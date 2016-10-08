@@ -14,7 +14,8 @@ namespace Vending.Core
         Nickel,
         Dime,
         Quarter,
-        FiftyCentPiece
+        FiftyCentPiece,
+        Dollar
     }
 
     public class VendingMachine
@@ -31,12 +32,6 @@ namespace Vending.Core
                 _returnTray.Add(coin);
                 return;
             }
-
-            //if (coin == Coin.Penny)
-            //{
-            //    _returnTray.Add(coin);
-            //    return;
-            //}
 
             _coins.Add(coin);
         }
