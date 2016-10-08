@@ -44,6 +44,12 @@ namespace Vending.Tests.Core
             Assert.AreEqual("$0.15", _vendingMachine.GetDisplayText());
         }
 
+        [TestMethod]
+        public void VendingMachine_GivenAQuarter_Displays_25()
+        {
+            _vendingMachine.Accept(Coin.Quarter);
+            Assert.AreEqual("$0.25", _vendingMachine.GetDisplayText());
+        }
 
     }
 }
