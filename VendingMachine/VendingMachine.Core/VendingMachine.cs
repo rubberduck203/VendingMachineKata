@@ -32,6 +32,12 @@ namespace Vending.Core
             {
                 _output.Add(soda);
                 _machineState = new ThankYouState();
+
+                //_coins.Clear();
+
+                //hardcoded for test
+                _returnTray.Add(Coin.Quarter);
+                _returnTray.Add(Coin.Quarter);
             }
         }
 

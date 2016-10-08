@@ -64,6 +64,20 @@ namespace Vending.Tests.Core
             Assert.AreEqual("soda", _vendingMachine.Output.First());
         }
 
+        [TestMethod]
+        public void VendingMachine_AfterDispensing_CoinsAreReturned()
+        {
+            InsertCoins(_vendingMachine, Coin.Quarter, 6);
+            _vendingMachine.Dispense("soda");
+
+            var expected = Enumerable.Repeat((int) Coin.Quarter, 2).ToList();
+            CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
+
+            //force state change
+           // _vendingMachine.GetDisplayText();
+            
+        }
+
         private void InsertCoins(VendingMachine machine, Coin coin, int count)
         {
             for (int i = 0; i < count; i++)
