@@ -13,5 +13,14 @@ namespace Vending.Tests.Core
             var vendingMachine = new VendingMachine();
             Assert.AreEqual("INSERT COIN", vendingMachine.Display);
         }
+
+        [TestMethod]
+        public void VendingMachine_GivenANickel_Displays_5()
+        {
+            var vendingMachine = new VendingMachine();
+            vendingMachine.Accept(Coin.Nickel);
+
+            Assert.AreEqual("5", vendingMachine.Display);
+        }
     }
 }
