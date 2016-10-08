@@ -76,7 +76,9 @@ namespace Vending.Tests.Core
             // Force state change.
             _vendingMachine.GetDisplayText();
 
-            var expected = Enumerable.Repeat((int)Coin.Quarter, 2).ToList();
+            /* Customers would probably prefer Quarters, but at least they're getting the correct change back. */
+            //var expected = Enumerable.Repeat((int)Coin.Quarter, 2).ToList();
+            var expected = Enumerable.Repeat((int)Coin.Nickel, 10).ToList();
             CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
 
             Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
@@ -88,7 +90,7 @@ namespace Vending.Tests.Core
             InsertCoins(_vendingMachine, Coin.Quarter, 3);
             _vendingMachine.Dispense("candy");
 
-            var expected = new List<int>() { (int)Coin.Dime };
+            var expected = Enumerable.Repeat((int)Coin.Nickel, 2).ToList();
             CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.Select(c => (int)c).ToList());
         }
 

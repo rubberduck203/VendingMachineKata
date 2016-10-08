@@ -31,8 +31,8 @@ namespace Vending.Core
         public void Dispense(string soda)
         {
             var priceInCents = _productInfoRepository.GetPrice(soda);
-            //const int priceInCents = 100; //soda
-            if (_machineState.CurrentTotal(_coins) < priceInCents)
+            var currentTotal = _machineState.CurrentTotal(_coins);
+            if (currentTotal < priceInCents)
             {
                 _machineState = new PriceState();
             }
@@ -43,9 +43,15 @@ namespace Vending.Core
 
                 _coins.Clear();
 
-                //hardcoded for test
-                _returnTray.Add(Coin.Quarter);
-                _returnTray.Add(Coin.Quarter);
+                if (currentTotal > priceInCents)
+                {
+                    var refund = currentTotal - priceInCents;
+                    while (refund > 0)
+                    {
+                        _returnTray.Add(Coin.Nickel);
+                        refund -= 5;
+                    }
+                }
             }
         }
 
