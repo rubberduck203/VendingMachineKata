@@ -59,5 +59,25 @@ namespace Vending.Tests.Core
             Assert.AreEqual("$0.35", _vendingMachine.GetDisplayText());
         }
 
+        [TestMethod]
+        public void VendingMachine_Given4QuartersAnd2DimesAnd3Nickels_Displays_135()
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                _vendingMachine.Accept(Coin.Quarter);
+            }
+
+            for (var i = 0; i < 2; i++)
+            {
+                _vendingMachine.Accept(Coin.Dime);
+            }
+
+            for (var i = 0; i < 3; i++)
+            {
+                _vendingMachine.Accept(Coin.Nickel);
+            }
+
+            Assert.AreEqual("$1.35", _vendingMachine.GetDisplayText());
+        }
     }
 }
