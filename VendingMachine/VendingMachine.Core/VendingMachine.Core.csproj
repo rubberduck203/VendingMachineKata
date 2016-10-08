@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coin.cs" />
+    <Compile Include="CurrentValueState.cs" />
     <Compile Include="InsertCoinState.cs" />
     <Compile Include="PriceState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
