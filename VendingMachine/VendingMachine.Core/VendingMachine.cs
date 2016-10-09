@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core
 {
@@ -16,7 +17,7 @@ namespace Vending.Core
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
         private readonly List<string> _output = new List<string>();
-        
+
         public IEnumerable<Coin> ReturnTray => _returnTray;
         public IEnumerable<string> Output => _output;
 
@@ -66,14 +67,12 @@ namespace Vending.Core
 
         private void Refund(int currentTotal, int? priceInCents)
         {
-            if (currentTotal > priceInCents)
+            var calculator = new RefundCalculator();
+            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
+
+            foreach (var coinCount in refund)
             {
-                var refund = currentTotal - priceInCents;
-                while (refund > 0)
-                {
-                    _returnTray.Add(Coin.Nickel);
-                    refund -= Coin.Nickel.Value();
-                }
+                _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
             }
         }
     }
