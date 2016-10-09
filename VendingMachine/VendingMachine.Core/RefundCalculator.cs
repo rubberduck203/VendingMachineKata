@@ -15,6 +15,11 @@ namespace Vending.Core
                 dimes = nickels / 2;
                 nickels = 0;
             }
+            else if(nickels % 3 == 0)
+            {
+                dimes = 1;
+                nickels = 1;
+            }
 
             return new Dictionary<Coin, int>()
             {
