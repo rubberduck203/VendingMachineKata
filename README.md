@@ -19,3 +19,10 @@ The following display states exist:
  2. Thank you!
  3. Insert Coin
  4. Current Total
+
+*Note:*
+So, we did end up with a state machine of sorts, but not the one I expected.
+It would be interesting to do this again as an actual finite state machine.
+One that doesn't keep track of the coins.
+
+Maybe more suited for a different kata. Perhaps a Parking Meter Kata.
