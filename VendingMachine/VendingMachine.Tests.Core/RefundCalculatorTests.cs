@@ -44,6 +44,13 @@ namespace Vending.Tests.Core
             AssertRefund(actual, nickels:1, dimes:1, quarters:0);
         }
 
+        [TestMethod]
+        public void RefundCalculator_Price30_Given50_RefundTwoDimes()
+        {
+            var actual = _refunder.CalculateRefund(30, 50);
+            AssertRefund(actual, nickels:0, dimes:2, quarters:0);
+        }
+
         private static void AssertRefund(IDictionary<Coin, int> actual, int nickels, int dimes, int quarters)
         {
             Assert.AreEqual(nickels, actual[Coin.Nickel]);
