@@ -29,5 +29,16 @@ namespace Vending.Tests.Core
             Assert.AreEqual(0, actual[Coin.Dime]);
             Assert.AreEqual(0, actual[Coin.Quarter]);
         }
+
+        [TestMethod]
+        public void RefundCalculator_Price65_Given75_RefundADime()
+        {
+            var refunder = new RefundCalculator();
+            var actual = refunder.CalculateRefund(65, 75);
+
+            Assert.AreEqual(0, actual[Coin.Nickel]);
+            Assert.AreEqual(1, actual[Coin.Dime]);
+            Assert.AreEqual(0, actual[Coin.Quarter]);
+        }
     }
 }
