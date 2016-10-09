@@ -17,7 +17,6 @@ namespace Vending.Core
 
             if (refundValue <= 0)
             {
-
                 return refund;
             }
 
@@ -31,12 +30,11 @@ namespace Vending.Core
             int dimes;
             nickels = ReduceNickels(nickels, nickelsPerDime, out dimes);
 
-            return new Dictionary<Coin, int>()
-            {
-                {Coin.Nickel, nickels},
-                {Coin.Dime, dimes},
-                {Coin.Quarter, quarters}
-            };
+            refund[Coin.Nickel] = nickels;
+            refund[Coin.Dime] = dimes;
+            refund[Coin.Quarter] = quarters;
+
+            return refund;
         }
 
         private static int ReduceNickels(int nickels, int nickelsPerCoin, out int coinCount)
