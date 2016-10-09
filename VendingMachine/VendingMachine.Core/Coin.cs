@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Vending.Core
+﻿namespace Vending.Core
 {
     public enum Coin
     {
