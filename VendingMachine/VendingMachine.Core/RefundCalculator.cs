@@ -15,6 +15,16 @@ namespace Vending.Core
 
             var refundValue = paidInCents - priceInCents;
 
+            if (refundValue <= 0)
+            {
+                return new Dictionary<Coin, int>()
+                {
+                    {Coin.Nickel, 0},
+                    {Coin.Dime, 0},
+                    {Coin.Quarter, 0}
+                };
+            }
+
             var nickels = refundValue / Coin.Nickel.Value();
 
             var dimes = 0;
