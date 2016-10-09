@@ -77,9 +77,9 @@ namespace Vending.Tests.Core
 
         private static void AssertRefund(IDictionary<Coin, int> actual, int nickels, int dimes, int quarters)
         {
-            Assert.AreEqual(nickels, actual[Coin.Nickel]);
-            Assert.AreEqual(dimes, actual[Coin.Dime]);
-            Assert.AreEqual(quarters, actual[Coin.Quarter]);
+            Assert.AreEqual(nickels, actual[Coin.Nickel], "Nickels");
+            Assert.AreEqual(dimes, actual[Coin.Dime], "Dimes");
+            Assert.AreEqual(quarters, actual[Coin.Quarter], "Quarters");
         }
     }
 }
