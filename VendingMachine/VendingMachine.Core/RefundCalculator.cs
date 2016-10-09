@@ -12,7 +12,12 @@ namespace Vending.Core
             var dimes = 0;
             var quarters = 0;
 
-            if (nickels % 2 == 0)
+            if (nickels % 5 == 0)
+            {
+                quarters = nickels / 5;
+                nickels = 0;
+            }
+            else if (nickels % 2 == 0)
             {
                 dimes = nickels / 2;
                 nickels = 0;
@@ -21,11 +26,6 @@ namespace Vending.Core
             {
                 dimes = 1;
                 nickels = 1;
-            }
-            else if (nickels % 5 == 0)
-            {
-                quarters = nickels / 5;
-                nickels = 0;
             }
 
             return new Dictionary<Coin, int>()
