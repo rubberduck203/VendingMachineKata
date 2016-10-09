@@ -1,4 +1,4 @@
-﻿namespace Vending.Core
+﻿namespace Vending.Core.States
 {
     public class InsertCoinState : VendingMachineState
     {

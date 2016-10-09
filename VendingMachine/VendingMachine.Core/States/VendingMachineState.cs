@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vending.Core
+namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
