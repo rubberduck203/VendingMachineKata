@@ -62,10 +62,10 @@ namespace Vending.Tests.Core
         public void RefundCalculator_Price50_Given80_Refund3Dimes()
         {
             var acutal = _refunder.CalculateRefund(50, 80);
-            AssertRefund(acutal, nickels:0, dimes:3, quarters:0);
+            //AssertRefund(acutal, nickels:0, dimes:3, quarters:0);
 
             /* The test above is acceptable, but the one below would be better. */
-            //AssertRefund(acutal, nickels:1, dimes:0, quarters:1);
+            AssertRefund(acutal, nickels:1, dimes:0, quarters:1);
         }
 
         [TestMethod]
@@ -73,6 +73,13 @@ namespace Vending.Tests.Core
         {
             var actual = _refunder.CalculateRefund(30, 80);
             AssertRefund(actual, nickels:0, dimes:0, quarters:2);
+        }
+
+        [TestMethod]
+        public void RefundCalculator_Price25_Given85_Refund2QuartersAndADime()
+        {
+            var acutal = _refunder.CalculateRefund(25, 85);
+            AssertRefund(acutal, nickels:0, dimes:1, quarters:2);
         }
 
         private static void AssertRefund(IDictionary<Coin, int> actual, int nickels, int dimes, int quarters)
