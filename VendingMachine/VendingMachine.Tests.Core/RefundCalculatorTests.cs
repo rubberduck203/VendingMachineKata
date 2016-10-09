@@ -14,9 +14,7 @@ namespace Vending.Tests.Core
             var refunder = new RefundCalculator();
             var actual = refunder.CalculateRefund(50, 50);
 
-            Assert.AreEqual(0, actual[Coin.Nickel]);
-            Assert.AreEqual(0, actual[Coin.Dime]);
-            Assert.AreEqual(0, actual[Coin.Quarter]);
+            AssertRefund(actual, nickels: 0, dimes:0, quarters:0);
         }
 
         [TestMethod]
@@ -25,9 +23,7 @@ namespace Vending.Tests.Core
             var refunder = new RefundCalculator();
             var actual = refunder.CalculateRefund(70, 75);
 
-            Assert.AreEqual(1, actual[Coin.Nickel]);
-            Assert.AreEqual(0, actual[Coin.Dime]);
-            Assert.AreEqual(0, actual[Coin.Quarter]);
+            AssertRefund(actual, nickels:1, dimes:0, quarters:0);
         }
 
         [TestMethod]
@@ -36,9 +32,7 @@ namespace Vending.Tests.Core
             var refunder = new RefundCalculator();
             var actual = refunder.CalculateRefund(65, 75);
 
-            Assert.AreEqual(0, actual[Coin.Nickel]);
-            Assert.AreEqual(1, actual[Coin.Dime]);
-            Assert.AreEqual(0, actual[Coin.Quarter]);
+            AssertRefund(actual, nickels: 0, dimes: 1, quarters: 0);
         }
 
         [TestMethod]
@@ -47,9 +41,14 @@ namespace Vending.Tests.Core
             var refunder = new RefundCalculator();
             var actual = refunder.CalculateRefund(60, 75);
 
-            Assert.AreEqual(1, actual[Coin.Nickel]);
-            Assert.AreEqual(1, actual[Coin.Dime]);
-            Assert.AreEqual(0, actual[Coin.Quarter]);
+            AssertRefund(actual, nickels:1, dimes:1, quarters:0);
+        }
+
+        private static void AssertRefund(IDictionary<Coin, int> actual, int nickels, int dimes, int quarters)
+        {
+            Assert.AreEqual(nickels, actual[Coin.Nickel]);
+            Assert.AreEqual(dimes, actual[Coin.Dime]);
+            Assert.AreEqual(quarters, actual[Coin.Quarter]);
         }
     }
 }
