@@ -6,16 +6,19 @@ namespace Vending.Core
     {
         public IDictionary<Coin, int> CalculateRefund(int priceInCents, int paidInCents)
         {
+            var refund = new Dictionary<Coin, int>()
+            {
+                {Coin.Nickel, 0},
+                {Coin.Dime, 0},
+                {Coin.Quarter, 0}
+            };
+
             var refundValue = paidInCents - priceInCents;
 
             if (refundValue <= 0)
             {
-                return new Dictionary<Coin, int>()
-                {
-                    {Coin.Nickel, 0},
-                    {Coin.Dime, 0},
-                    {Coin.Quarter, 0}
-                };
+
+                return refund;
             }
 
             var nickels = refundValue / Coin.Nickel.Value();
