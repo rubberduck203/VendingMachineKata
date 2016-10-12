@@ -24,7 +24,6 @@ namespace Vending.Core
 
         public void ReturnCoins()
         {
-            
         }
 
         public void Dispense(string sku)
