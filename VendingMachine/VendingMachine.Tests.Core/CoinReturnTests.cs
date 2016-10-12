@@ -34,5 +34,26 @@ namespace Vending.Tests.Core
 
             CollectionAssert.AreEqual(new List<Coin>() { Coin.Dime }, _vendingMachine.ReturnTray.ToList());
         }
+
+        [TestMethod]
+        public void CoinReturn_WhenMultipleCoinsAreInserted_CoinsOfSameValueAreReturned()
+        {
+            var expected = new List<Coin>()
+            {
+                Coin.Dime,
+                Coin.Quarter,
+                Coin.Nickel,
+                Coin.Dime
+            };
+
+            foreach (var coin in expected)
+            {
+                _vendingMachine.Accept(coin);
+            }
+
+            _vendingMachine.ReturnCoins();
+
+            CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.ToList());
+        }
     }
 }
