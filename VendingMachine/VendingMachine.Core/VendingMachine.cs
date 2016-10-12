@@ -24,6 +24,7 @@ namespace Vending.Core
 
         public void ReturnCoins()
         {
+            _returnTray.AddRange(_coins);
         }
 
         public void Dispense(string sku)

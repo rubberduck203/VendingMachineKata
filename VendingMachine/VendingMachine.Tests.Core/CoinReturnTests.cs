@@ -17,5 +17,16 @@ namespace Vending.Tests.Core
 
             CollectionAssert.AreEqual(new List<Coin>(), vendingMachine.ReturnTray.ToList());
         }
+
+        [TestMethod]
+        public void CoinReturn_WhenACoinIsInserted_ACoinOfSameValueIsReturned()
+        {
+            var vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
+            vendingMachine.Accept(Coin.Dime);
+
+            vendingMachine.ReturnCoins();
+
+            CollectionAssert.AreEqual(new List<Coin>() { Coin.Dime }, vendingMachine.ReturnTray.ToList());
+        }
     }
 }
