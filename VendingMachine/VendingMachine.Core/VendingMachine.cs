@@ -22,6 +22,11 @@ namespace Vending.Core
         public IEnumerable<Coin> ReturnTray => _returnTray;
         public IEnumerable<string> Output => _output;
 
+        public void ReturnCoins()
+        {
+            
+        }
+
         public void Dispense(string sku)
         {
             var priceInCents = _productInfoRepository.GetPrice(sku);
