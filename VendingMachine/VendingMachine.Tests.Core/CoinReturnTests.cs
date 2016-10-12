@@ -9,24 +9,30 @@ namespace Vending.Tests.Core
     [TestClass]
     public class CoinReturnTests
     {
+        private VendingMachine _vendingMachine;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
+        }
+
         [TestMethod]
         public void CoinReturn_WhenNoMoneyInCoinSlot_NoCoinsInReturn()
         {
-            var vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
-            vendingMachine.ReturnCoins();
+            _vendingMachine.ReturnCoins();
 
-            CollectionAssert.AreEqual(new List<Coin>(), vendingMachine.ReturnTray.ToList());
+            CollectionAssert.AreEqual(new List<Coin>(), _vendingMachine.ReturnTray.ToList());
         }
 
         [TestMethod]
         public void CoinReturn_WhenACoinIsInserted_ACoinOfSameValueIsReturned()
         {
-            var vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
-            vendingMachine.Accept(Coin.Dime);
+            _vendingMachine.Accept(Coin.Dime);
 
-            vendingMachine.ReturnCoins();
+            _vendingMachine.ReturnCoins();
 
-            CollectionAssert.AreEqual(new List<Coin>() { Coin.Dime }, vendingMachine.ReturnTray.ToList());
+            CollectionAssert.AreEqual(new List<Coin>() { Coin.Dime }, _vendingMachine.ReturnTray.ToList());
         }
     }
 }
