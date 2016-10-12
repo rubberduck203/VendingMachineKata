@@ -55,5 +55,14 @@ namespace Vending.Tests.Core
 
             CollectionAssert.AreEqual(expected, _vendingMachine.ReturnTray.ToList());
         }
+
+        [TestMethod]
+        public void CoinReturn_WhenCoinsAreReturned_DisplaysInsertCoin()
+        {
+            _vendingMachine.Accept(Coin.Dime);
+            _vendingMachine.ReturnCoins();
+
+            Assert.AreEqual("INSERT COIN", _vendingMachine.GetDisplayText());
+        }
     }
 }
