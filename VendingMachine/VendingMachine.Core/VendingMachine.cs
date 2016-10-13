@@ -64,8 +64,7 @@ namespace Vending.Core
 
         public string GetDisplayText()
         {
-            var text = State.Display();
-            return text;
+            return State.Display();
         }
 
         private void Refund(int currentTotal, int? priceInCents)
