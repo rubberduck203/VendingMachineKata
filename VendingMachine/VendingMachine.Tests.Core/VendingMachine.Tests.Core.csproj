@@ -59,6 +59,7 @@
     <Compile Include="VendingMachineCoinInsertionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VendingMachineDispenseTests.cs" />
+    <Compile Include="VendingMachineStateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VendingMachine.Core\VendingMachine.Core.csproj">

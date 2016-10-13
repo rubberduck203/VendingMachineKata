@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
+        public static VendingMachineState Default => new InsertCoinState();
+
         public abstract string Display();
 
         public virtual int CurrentTotal(IEnumerable<Coin> coins)
