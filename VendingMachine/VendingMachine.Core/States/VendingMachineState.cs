@@ -53,5 +53,17 @@ namespace Vending.Core.States
                 returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
             }
         }
+
+        public bool AcceptCoin(Coin coin, List<Coin> coins, List<Coin> returnTray)
+        {
+            if (coin.Value() == 0)
+            {
+                returnTray.Add(coin);
+                return false;
+            }
+
+            coins.Add(coin);
+            return true;
+        }
     }
 }
