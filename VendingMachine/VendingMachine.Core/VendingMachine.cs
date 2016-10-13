@@ -52,14 +52,22 @@ namespace Vending.Core
 
         public void Accept(Coin coin)
         {
+            if (AcceptCoin(coin, _coins, _returnTray))
+            {
+                State = new CurrentValueState(this, _coins);
+            }
+        }
+
+        private bool AcceptCoin(Coin coin, List<Coin> coins, List<Coin> returnTray)
+        {
             if (coin.Value() == 0)
             {
-                _returnTray.Add(coin);
-                return;
+                returnTray.Add(coin);
+                return false;
             }
 
-            _coins.Add(coin);
-            State = new CurrentValueState(this, _coins);
+            coins.Add(coin);
+            return true;
         }
 
         public string GetDisplayText()
