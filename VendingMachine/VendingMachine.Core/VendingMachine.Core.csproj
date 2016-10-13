@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coin.cs" />
+    <Compile Include="StateContext.cs" />
     <Compile Include="States\CurrentValueState.cs" />
     <Compile Include="InMemoryProductInfoRepository.cs" />
     <Compile Include="States\InsertCoinState.cs" />

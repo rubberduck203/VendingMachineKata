@@ -4,7 +4,7 @@ using Vending.Core.States;
 
 namespace Vending.Core
 {
-    public class VendingMachine
+    public class VendingMachine : StateContext
     {
         private readonly ProductInfoRepository _productInfoRepository;
 
@@ -13,7 +13,7 @@ namespace Vending.Core
             _productInfoRepository = productInfoRepository;
         }
 
-        private VendingMachineState _machineState = new InsertCoinState();
+        public VendingMachineState State { get; set; } = VendingMachineState.Default;
 
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
@@ -26,22 +26,22 @@ namespace Vending.Core
         {
             _returnTray.AddRange(_coins);
             _coins.Clear();
-            _machineState = VendingMachineState.Default;
+            State = VendingMachineState.Default;
         }
 
         public void Dispense(string sku)
         {
             var priceInCents = _productInfoRepository.GetPrice(sku);
-            var currentTotal = _machineState.CurrentTotal(_coins);
+            var currentTotal = State.CurrentTotal(_coins);
 
             if (currentTotal < priceInCents)
             {
-                _machineState = new PriceState(priceInCents.Value);
+                State = new PriceState(priceInCents.Value);
             }
             else
             {
                 _output.Add(sku);
-                _machineState = new ThankYouState();
+                State = new ThankYouState();
 
                 _coins.Clear();
 
@@ -58,16 +58,16 @@ namespace Vending.Core
             }
 
             _coins.Add(coin);
-            _machineState = new CurrentValueState(_coins);
+            State = new CurrentValueState(_coins);
         }
 
         public string GetDisplayText()
         {
-            var text = _machineState.Display();
+            var text = State.Display();
 
-            if (_machineState is ThankYouState)
+            if (State is ThankYouState)
             {
-                _machineState = VendingMachineState.Default;
+                State = VendingMachineState.Default;
             }
 
             return text;
