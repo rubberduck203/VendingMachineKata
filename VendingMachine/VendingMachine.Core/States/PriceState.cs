@@ -10,7 +10,7 @@
             _priceInCents = priceInCents;
         }
 
-        public override string Display()
+        public override string GetDisplayText()
         {
             return $"PRICE: {_priceInCents/100:C}";
         }

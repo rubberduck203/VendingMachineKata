@@ -6,7 +6,7 @@
             : base(context)
         { }
 
-        public override string Display()
+        public override string GetDisplayText()
         {
             return "INSERT COIN";
         }

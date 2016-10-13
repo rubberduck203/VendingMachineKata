@@ -17,7 +17,7 @@ namespace Vending.Core.States
 
         protected StateContext Context { get; }
 
-        public abstract string Display();
+        public abstract string GetDisplayText();
 
         public int CurrentTotal(IEnumerable<Coin> coins)
         {

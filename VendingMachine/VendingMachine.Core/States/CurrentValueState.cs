@@ -12,7 +12,7 @@ namespace Vending.Core.States
             _coins = coins;
         }
 
-        public override string Display()
+        public override string GetDisplayText()
         {
             var total = ConvertCentsToDollars(CurrentTotal(_coins));
             return $"{total:C}";

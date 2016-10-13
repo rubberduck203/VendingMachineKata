@@ -11,14 +11,14 @@ namespace Vending.Tests.Core
         public void PriceState_Soda_Displays_OneDollar()
         {
             VendingMachineState state = new PriceState(new FakeStateContext(), 100);
-            Assert.AreEqual("PRICE: $1.00", state.Display());
+            Assert.AreEqual("PRICE: $1.00", state.GetDisplayText());
         }
 
         [TestMethod]
         public void InsertCoinState_Displays_InsertCoin()
         {
             VendingMachineState state = new InsertCoinState(new FakeStateContext());
-            Assert.AreEqual("INSERT COIN", state.Display());
+            Assert.AreEqual("INSERT COIN", state.GetDisplayText());
         }
     }
 
