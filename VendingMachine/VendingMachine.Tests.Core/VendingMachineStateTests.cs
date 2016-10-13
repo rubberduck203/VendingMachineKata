@@ -11,7 +11,7 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachineState_DefaultIsInsertCoins()
         {
-            Assert.IsInstanceOfType(VendingMachineState.Default, typeof(InsertCoinState));
+            Assert.IsInstanceOfType(VendingMachineState.Default(new FakeStateContext()), typeof(InsertCoinState));
         }
 
         [TestMethod]
@@ -20,11 +20,11 @@ namespace Vending.Tests.Core
             VendingMachine vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
             StateContext context = vendingMachine;
 
-            context.State = new ThankYouState();
+            context.State = new ThankYouState(context);
 
             vendingMachine.GetDisplayText();
 
-            Assert.IsInstanceOfType(context.State, VendingMachineState.Default.GetType());
+            Assert.IsInstanceOfType(context.State, VendingMachineState.Default(vendingMachine).GetType());
         }
     }
 }

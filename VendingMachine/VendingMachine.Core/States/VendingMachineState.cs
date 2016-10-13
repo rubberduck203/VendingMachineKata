@@ -5,7 +5,17 @@ namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
-        public static VendingMachineState Default => new InsertCoinState();
+        protected VendingMachineState(StateContext context)
+        {
+            Context = context;
+        }
+
+        public static VendingMachineState Default(StateContext context)
+        {
+            return new InsertCoinState(context);
+        } 
+
+        protected StateContext Context { get; }
 
         public abstract string Display();
 

@@ -11,9 +11,10 @@ namespace Vending.Core
         public VendingMachine(ProductInfoRepository productInfoRepository)
         {
             _productInfoRepository = productInfoRepository;
+            State = VendingMachineState.Default(this);
         }
 
-        public VendingMachineState State { get; set; } = VendingMachineState.Default;
+        public VendingMachineState State { get; set; } 
 
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
@@ -26,7 +27,7 @@ namespace Vending.Core
         {
             _returnTray.AddRange(_coins);
             _coins.Clear();
-            State = VendingMachineState.Default;
+            State = VendingMachineState.Default(this);
         }
 
         public void Dispense(string sku)
@@ -36,12 +37,12 @@ namespace Vending.Core
 
             if (currentTotal < priceInCents)
             {
-                State = new PriceState(priceInCents.Value);
+                State = new PriceState(this, priceInCents.Value);
             }
             else
             {
                 _output.Add(sku);
-                State = new ThankYouState();
+                State = new ThankYouState(this);
 
                 _coins.Clear();
 
@@ -58,18 +59,12 @@ namespace Vending.Core
             }
 
             _coins.Add(coin);
-            State = new CurrentValueState(_coins);
+            State = new CurrentValueState(this, _coins);
         }
 
         public string GetDisplayText()
         {
             var text = State.Display();
-
-            if (State is ThankYouState)
-            {
-                State = VendingMachineState.Default;
-            }
-
             return text;
         }
 

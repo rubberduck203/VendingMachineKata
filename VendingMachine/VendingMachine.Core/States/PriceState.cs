@@ -4,7 +4,8 @@
     {
         private readonly decimal _priceInCents;
 
-        public PriceState(int priceInCents)
+        public PriceState(StateContext context, int priceInCents)
+            :base(context)
         {
             _priceInCents = priceInCents;
         }
