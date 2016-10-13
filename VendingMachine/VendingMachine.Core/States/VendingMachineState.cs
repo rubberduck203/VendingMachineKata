@@ -9,7 +9,7 @@ namespace Vending.Core.States
 
         public abstract string Display();
 
-        public virtual int CurrentTotal(IEnumerable<Coin> coins)
+        public int CurrentTotal(IEnumerable<Coin> coins)
         {
             var counts = new Dictionary<Coin, int>()
             {
