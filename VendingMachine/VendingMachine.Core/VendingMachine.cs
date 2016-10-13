@@ -46,7 +46,7 @@ namespace Vending.Core
 
                 _coins.Clear();
 
-                Refund(currentTotal, priceInCents);
+                State.Refund(currentTotal, priceInCents, _returnTray);
             }
         }
 
@@ -65,17 +65,6 @@ namespace Vending.Core
         public string GetDisplayText()
         {
             return State.GetDisplayText();
-        }
-
-        private void Refund(int currentTotal, int? priceInCents)
-        {
-            var calculator = new RefundCalculator();
-            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
-
-            foreach (var coinCount in refund)
-            {
-                _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
-            }
         }
     }
 }

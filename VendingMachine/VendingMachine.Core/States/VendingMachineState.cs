@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core.States
 {
@@ -40,6 +41,17 @@ namespace Vending.Core.States
             }
 
             return total;
+        }
+
+        public void Refund(int currentTotal, int? priceInCents, List<Coin> returnTray)
+        {
+            var calculator = new RefundCalculator();
+            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
+
+            foreach (var coinCount in refund)
+            {
+                returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
+            }
         }
     }
 }
