@@ -26,7 +26,7 @@ namespace Vending.Core
         {
             _returnTray.AddRange(_coins);
             _coins.Clear();
-            _machineState = new InsertCoinState();
+            _machineState = VendingMachineState.Default;
         }
 
         public void Dispense(string sku)
@@ -67,7 +67,7 @@ namespace Vending.Core
 
             if (_machineState is ThankYouState)
             {
-                _machineState = new InsertCoinState();
+                _machineState = VendingMachineState.Default;
             }
 
             return text;
