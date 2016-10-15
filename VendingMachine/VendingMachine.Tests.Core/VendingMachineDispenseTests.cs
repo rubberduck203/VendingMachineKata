@@ -8,11 +8,13 @@ namespace Vending.Tests.Core
     public class VendingMachineDispenseTests
     {
         private VendingMachine _vendingMachine;
+        private InMemoryProductInfoRepository _productInfoRepository;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
+            _productInfoRepository = new InMemoryProductInfoRepository();
+            _vendingMachine = new VendingMachine(_productInfoRepository);
         }
 
         [TestMethod]
@@ -96,6 +98,17 @@ namespace Vending.Tests.Core
             _vendingMachine.Dispense("candy");
 
             Assert.AreEqual("PRICE: $0.65", _vendingMachine.GetDisplayText());
+        }
+
+        [TestMethod]
+        public void VendingMachine_AfterDispense_DecrementProductQuantityOnHand()
+        {
+            InsertCoins(_vendingMachine, Coin.Quarter, 3);
+            const string sku = "candy";
+
+            _vendingMachine.Dispense(sku);
+
+            Assert.AreEqual(9, _productInfoRepository.GetQuantityAvailable(sku));
         }
 
         private void InsertCoins(VendingMachine machine, Coin coin, int count)

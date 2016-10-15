@@ -19,6 +19,7 @@
             else
             {
                 Output.Add(sku);
+                ProductInfoRepository.DecrementProductCount(sku);
                 Coins.Clear();
 
                 Refund(currentTotal, priceInCents);
