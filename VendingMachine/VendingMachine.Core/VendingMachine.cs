@@ -82,7 +82,7 @@ namespace Vending.Core
         {
             var text = State.Display();
 
-            if (State is ThankYouState || State is SoldOutState)
+            if (State is ThankYouState )
             {
                 State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
             }
