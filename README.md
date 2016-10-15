@@ -26,3 +26,8 @@ It would be interesting to do this again as an actual finite state machine.
 One that doesn't keep track of the coins.
 
 Maybe more suited for a different kata. Perhaps a Parking Meter Kata.
+
+ - Next time, don't focus on the display state. Focus on the state of the machine.
+   - No money
+   - Has money
+   - ??
