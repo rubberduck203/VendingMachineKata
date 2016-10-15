@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace Vending.Core.States
+﻿namespace Vending.Core.States
 {
     public class ThankYouState : VendingMachineState
     {

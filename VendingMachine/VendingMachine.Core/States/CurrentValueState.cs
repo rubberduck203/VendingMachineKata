@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Vending.Core.States
+﻿namespace Vending.Core.States
 {
     public class CurrentValueState : VendingMachineState
     {
