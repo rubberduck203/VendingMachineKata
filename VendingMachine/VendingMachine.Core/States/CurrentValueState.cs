@@ -21,11 +21,11 @@ namespace Vending.Core.States
             else
             {
                 Output.Add(sku);
-                Context.State = new ThankYouState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
-
                 Coins.Clear();
 
                 Refund(currentTotal, priceInCents);
+
+                Context.State = new ThankYouState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
             }
         }
 

@@ -5,9 +5,6 @@ namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
-        public StateContext Context { get; }
-        public List<Coin> Coins { get; }
-
         protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
         {
             Context = context;
@@ -17,11 +14,11 @@ namespace Vending.Core.States
             ReturnTray = returnTray;
         }
 
+        protected StateContext Context { get; }
+        public List<Coin> Coins { get; }
         public List<Coin> ReturnTray { get; }
-
-        public ProductInfoRepository ProductInfoRepository { get; set; }
-
-        public List<string> Output { get; set; }
+        protected List<string> Output { get; }
+        protected ProductInfoRepository ProductInfoRepository { get; }
 
         public abstract string Display();
 
