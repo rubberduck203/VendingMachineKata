@@ -13,8 +13,8 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void NoMoneyState_WhenRefund_NoMoneyRefunded()
         {
-            var state = new NoMoneyState();
-            state.Refund();
+            var state = new NoMoneyState(new List<Coin>());
+            state.Refund(0, 0);
 
             CollectionAssert.AreEqual(new List<Coin>(), state.ReturnTray.ToList());
         }

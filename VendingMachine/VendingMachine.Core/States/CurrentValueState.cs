@@ -6,7 +6,8 @@ namespace Vending.Core.States
     {
         private readonly IEnumerable<Coin> _coins;
 
-        public CurrentValueState(IEnumerable<Coin> coins)
+        public CurrentValueState(List<Coin> returnTray, IEnumerable<Coin> coins) 
+            : base(returnTray)
         {
             _coins = coins;
         }

@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
-        private readonly List<Coin> _returnTray = new List<Coin>();
-        public IEnumerable<Coin> ReturnTray => _returnTray;
+        private readonly List<Coin> _returnTray;
+
+        protected VendingMachineState(List<Coin> returnTray)
+        {
+            _returnTray = returnTray;
+        }
+
+        public List<Coin> ReturnTray => _returnTray;
         public abstract string Display();
 
         public  int CurrentTotal(IEnumerable<Coin> coins)
@@ -31,9 +38,15 @@ namespace Vending.Core.States
             return total;
         }
 
-        public virtual void Refund()
+        public void Refund(int currentTotal, int? priceInCents)
         {
-            
+            var calculator = new RefundCalculator();
+            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
+
+            foreach (var coinCount in refund)
+            {
+                _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
+            }
         }
     }
 }

@@ -13,27 +13,26 @@ namespace Vending.Core
             _productInfoRepository = productInfoRepository;
         }
 
-        private VendingMachineState _machineState = new NoMoneyState();
+        private VendingMachineState _machineState = new NoMoneyState(new List<Coin>());
 
         private readonly List<Coin> _coins = new List<Coin>();
-        private readonly List<Coin> _returnTray = new List<Coin>();
         private readonly List<string> _output = new List<string>();
 
-        public IEnumerable<Coin> ReturnTray => _returnTray;
+        public IEnumerable<Coin> ReturnTray => _machineState.ReturnTray;
         public IEnumerable<string> Output => _output;
 
         public void ReturnCoins()
         {
-            _returnTray.AddRange(_coins);
+            _machineState.ReturnTray.AddRange(_coins);
             _coins.Clear();
-            _machineState = new NoMoneyState();
+            _machineState = new NoMoneyState(_machineState.ReturnTray);
         }
 
         public void Dispense(string sku)
         {
             if (_productInfoRepository.GetQuantityAvailable(sku) == 0)
             {
-                _machineState = new SoldOutState();
+                _machineState = new SoldOutState(_machineState.ReturnTray);
                 return;
             }
 
@@ -42,16 +41,16 @@ namespace Vending.Core
 
             if (currentTotal < priceInCents)
             {
-                _machineState = new PriceState(priceInCents.Value);
+                _machineState = new PriceState(_machineState.ReturnTray, priceInCents.Value);
             }
             else
             {
                 _output.Add(sku);
-                _machineState = new ThankYouState();
+                _machineState = new ThankYouState(_machineState.ReturnTray);
 
                 _coins.Clear();
 
-                Refund(currentTotal, priceInCents);
+                _machineState.Refund(currentTotal, priceInCents);
             }
         }
 
@@ -59,12 +58,12 @@ namespace Vending.Core
         {
             if (coin.Value() == 0)
             {
-                _returnTray.Add(coin);
+                _machineState.ReturnTray.Add(coin);
                 return;
             }
 
             _coins.Add(coin);
-            _machineState = new CurrentValueState(_coins);
+            _machineState = new CurrentValueState(_machineState.ReturnTray, _coins);
         }
 
         public string GetDisplayText()
@@ -73,21 +72,11 @@ namespace Vending.Core
 
             if (_machineState is ThankYouState || _machineState is SoldOutState)
             {
-                _machineState = new NoMoneyState();
+                _machineState = new NoMoneyState(_machineState.ReturnTray);
             }
 
             return text;
         }
 
-        private void Refund(int currentTotal, int? priceInCents)
-        {
-            var calculator = new RefundCalculator();
-            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
-
-            foreach (var coinCount in refund)
-            {
-                _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
-            }
-        }
     }
 }
