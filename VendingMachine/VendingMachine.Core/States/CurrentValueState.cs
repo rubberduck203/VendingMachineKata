@@ -3,7 +3,7 @@
     public class CurrentValueState : VendingMachineState
     {
         public CurrentValueState(VendingMachineState state)
-            : base(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
+            : base(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output)
         {
         }
 
@@ -20,7 +20,7 @@
             {
                 Output.Add(sku);
                 ProductInfoRepository.DecrementProductCount(sku);
-                Coins.Clear();
+                CoinSlot.Clear();
 
                 Refund(currentTotal, priceInCents);
 
