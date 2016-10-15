@@ -70,6 +70,7 @@ namespace Vending.Core.States
         {
             returnTray.AddRange(coins);
             coins.Clear();
+            Context.State = VendingMachineState.Default(Context);
         }
     }
 }
