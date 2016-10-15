@@ -25,6 +25,7 @@ namespace Vending.Core.States
         protected internal ProductInfoRepository ProductInfoRepository { get; }
 
         public abstract string Display();
+        public abstract void Dispense(string sku);
 
         public  int CurrentTotal(IEnumerable<Coin> coins)
         {
@@ -58,11 +59,6 @@ namespace Vending.Core.States
             {
                 ReturnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
             }
-        }
-
-        public virtual void Dispense(string sku)
-        {
-            
         }
     }
 }

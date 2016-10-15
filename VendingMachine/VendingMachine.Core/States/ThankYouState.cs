@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Vending.Core.States
 {
@@ -14,6 +15,12 @@ namespace Vending.Core.States
             Context.State = new NoMoneyState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
 
             return "THANK YOU!";
+        }
+
+        public override void Dispense(string sku)
+        {
+            //Asserting because this action should do nothing if it happens in production.
+            Debug.Assert(false, "You're trying to Dispense from an unsupported state.");
         }
     }
 }

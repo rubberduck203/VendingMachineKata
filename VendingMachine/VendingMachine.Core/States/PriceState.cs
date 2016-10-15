@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Vending.Core.States
 {
@@ -20,6 +22,12 @@ namespace Vending.Core.States
         public override string Display()
         {
             return $"PRICE: {_priceInCents/100:C}";
+        }
+
+        public override void Dispense(string sku)
+        {
+            //Asserting because this action should do nothing if it happens in production.
+            Debug.Assert(false, "You're trying to Dispense from an unsupported state.");
         }
     }
 }
