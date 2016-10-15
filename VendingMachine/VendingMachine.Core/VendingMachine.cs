@@ -12,13 +12,15 @@ namespace Vending.Core
     {
         public VendingMachine(ProductInfoRepository productInfoRepository)
         {
-            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository, new List<string>());
+            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository, new List<string>(), new List<Coin>());
         }
 
         public VendingMachineState State { get; set; }
 
         public IEnumerable<Coin> ReturnTray => State.ReturnTray;
         public IEnumerable<string> Output => State.Output;
+
+        public IEnumerable<Coin> Vault => State.Vault;
 
         public void ReturnCoins()
         {

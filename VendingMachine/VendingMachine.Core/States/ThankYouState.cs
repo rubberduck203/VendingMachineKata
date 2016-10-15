@@ -3,13 +3,13 @@
     public class ThankYouState : VendingMachineState
     {
         public ThankYouState(VendingMachineState state)
-            :base(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output)
+            :base(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output, state.Vault)
         {
         }
 
         public override string Display()
         {
-            Context.State = new NoMoneyState(Context, ReturnTray, CoinSlot, ProductInfoRepository, Output);
+            Context.State = new NoMoneyState(this);
 
             return "THANK YOU!";
         }

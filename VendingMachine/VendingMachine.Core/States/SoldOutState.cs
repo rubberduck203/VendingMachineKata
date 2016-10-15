@@ -5,12 +5,7 @@ namespace Vending.Core.States
     internal class SoldOutState : VendingMachineState
     {
         public SoldOutState(VendingMachineState state)
-            : base(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output)
-        {
-        }
-
-        public SoldOutState(StateContext context, List<Coin> returnTray, List<Coin> coinSlot, ProductInfoRepository productInfoRepository, List<string> output) 
-            : base(context, returnTray, coinSlot, productInfoRepository, output)
+            : base(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output, state.Vault)
         {
         }
 

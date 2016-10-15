@@ -6,15 +6,16 @@ namespace Vending.Core.States
     public abstract class VendingMachineState
     {
         protected VendingMachineState(VendingMachineState state)
-            :this(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output)
+            :this(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output, state.Vault)
         { }
 
-        protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coinSlot, ProductInfoRepository productInfoRepository, List<string> output)
+        protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coinSlot, ProductInfoRepository productInfoRepository, List<string> output, List<Coin> vault)
         {
             Context = context;
             CoinSlot = coinSlot;
             ProductInfoRepository = productInfoRepository;
             Output = output;
+            Vault = vault;
             ReturnTray = returnTray;
         }
 
@@ -23,6 +24,8 @@ namespace Vending.Core.States
         public List<Coin> ReturnTray { get; }
         protected internal List<string> Output { get; }
         protected internal ProductInfoRepository ProductInfoRepository { get; }
+
+        public List<Coin> Vault { get; }
 
         public abstract string Display();
         protected abstract void DispenseCallback(string sku);
