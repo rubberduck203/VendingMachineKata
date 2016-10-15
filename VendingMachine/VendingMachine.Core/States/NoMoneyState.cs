@@ -1,6 +1,6 @@
 ﻿namespace Vending.Core.States
 {
-    public class InsertCoinState : VendingMachineState
+    public class NoMoneyState : VendingMachineState
     {
         public override string Display()
         {

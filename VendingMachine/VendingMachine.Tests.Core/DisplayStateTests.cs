@@ -17,7 +17,7 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void InsertCoinState_Displays_InsertCoin()
         {
-            VendingMachineState state = new InsertCoinState();
+            VendingMachineState state = new NoMoneyState();
             Assert.AreEqual("INSERT COIN", state.Display());
         }
     }

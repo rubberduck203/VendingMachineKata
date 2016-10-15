@@ -19,6 +19,7 @@ namespace Vending.Tests.Core
             Assert.AreEqual("INSERT COIN", vendingMachine.GetDisplayText());
         }
 
+        [Ignore]
         [TestMethod]
         public void VendingMachine_WhenSoldOutAndMoneyIsInMachine_DisplaySoldOutThenCurrentAmount()
         {

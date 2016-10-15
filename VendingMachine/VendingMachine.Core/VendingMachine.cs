@@ -13,7 +13,7 @@ namespace Vending.Core
             _productInfoRepository = productInfoRepository;
         }
 
-        private VendingMachineState _machineState = new InsertCoinState();
+        private VendingMachineState _machineState = new NoMoneyState();
 
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<Coin> _returnTray = new List<Coin>();
@@ -26,7 +26,7 @@ namespace Vending.Core
         {
             _returnTray.AddRange(_coins);
             _coins.Clear();
-            _machineState = new InsertCoinState();
+            _machineState = new NoMoneyState();
         }
 
         public void Dispense(string sku)
@@ -73,7 +73,7 @@ namespace Vending.Core
 
             if (_machineState is ThankYouState || _machineState is SoldOutState)
             {
-                _machineState = new InsertCoinState();
+                _machineState = new NoMoneyState();
             }
 
             return text;
