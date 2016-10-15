@@ -1,87 +1,43 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Vending.Core.States;
 
 namespace Vending.Core
 {
-    public class VendingMachine
+    public interface StateContext
     {
-        private readonly ProductInfoRepository _productInfoRepository;
+        VendingMachineState State { get; set; }
+    }
 
+    public class VendingMachine : StateContext
+    {
         public VendingMachine(ProductInfoRepository productInfoRepository)
         {
-            _productInfoRepository = productInfoRepository;
+            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository, new List<string>());
         }
 
-        private VendingMachineState _machineState = new InsertCoinState();
+        public VendingMachineState State { get; set; }
 
-        private readonly List<Coin> _coins = new List<Coin>();
-        private readonly List<Coin> _returnTray = new List<Coin>();
-        private readonly List<string> _output = new List<string>();
-
-        public IEnumerable<Coin> ReturnTray => _returnTray;
-        public IEnumerable<string> Output => _output;
+        public IEnumerable<Coin> ReturnTray => State.ReturnTray;
+        public IEnumerable<string> Output => State.Output;
 
         public void ReturnCoins()
         {
-            _returnTray.AddRange(_coins);
-            _coins.Clear();
-            _machineState = new InsertCoinState();
+            State.ReturnCoins();
         }
 
         public void Dispense(string sku)
         {
-            var priceInCents = _productInfoRepository.GetPrice(sku);
-            var currentTotal = _machineState.CurrentTotal(_coins);
-
-            if (currentTotal < priceInCents)
-            {
-                _machineState = new PriceState(priceInCents.Value);
-            }
-            else
-            {
-                _output.Add(sku);
-                _machineState = new ThankYouState();
-
-                _coins.Clear();
-
-                Refund(currentTotal, priceInCents);
-            }
+            State.Dispense(sku);
         }
 
         public void Accept(Coin coin)
         {
-            if (coin.Value() == 0)
-            {
-                _returnTray.Add(coin);
-                return;
-            }
-
-            _coins.Add(coin);
-            _machineState = new CurrentValueState(_coins);
+            State.Accept(coin);
         }
 
         public string GetDisplayText()
         {
-            var text = _machineState.Display();
-
-            if (_machineState is ThankYouState)
-            {
-                _machineState = new InsertCoinState();
-            }
-
-            return text;
-        }
-
-        private void Refund(int currentTotal, int? priceInCents)
-        {
-            var calculator = new RefundCalculator();
-            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
-
-            foreach (var coinCount in refund)
-            {
-                _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
-            }
+            return State.Display();
         }
     }
 }

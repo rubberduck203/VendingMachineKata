@@ -1,12 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
-        public abstract string Display();
+        protected VendingMachineState(VendingMachineState state)
+            :this(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
+        { }
 
-        public virtual int CurrentTotal(IEnumerable<Coin> coins)
+        protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
+        {
+            Context = context;
+            Coins = coins;
+            ProductInfoRepository = productInfoRepository;
+            Output = output;
+            ReturnTray = returnTray;
+        }
+
+        protected internal StateContext Context { get; }
+        public List<Coin> Coins { get; }
+        public List<Coin> ReturnTray { get; }
+        protected internal List<string> Output { get; }
+        protected internal ProductInfoRepository ProductInfoRepository { get; }
+
+        public abstract string Display();
+        protected abstract void DispenseCallback(string sku);
+
+        public int CurrentTotal()
         {
             var counts = new Dictionary<Coin, int>()
             {
@@ -15,7 +36,7 @@ namespace Vending.Core.States
                 {Coin.Quarter, 0}
             };
 
-            foreach (var coin in coins)
+            foreach (var coin in Coins)
             {
                 counts[coin]++;
             }
@@ -27,6 +48,47 @@ namespace Vending.Core.States
             }
 
             return total;
+        }
+
+        public void Refund(int currentTotal, int? priceInCents)
+        {
+            var calculator = new RefundCalculator();
+            var refund = calculator.CalculateRefund(priceInCents ?? 0, currentTotal);
+
+            foreach (var coinCount in refund)
+            {
+                ReturnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
+            }
+        }
+
+        public void ReturnCoins()
+        {
+            ReturnTray.AddRange(Coins);
+            Coins.Clear();
+            Context.State = new NoMoneyState(this);
+        }
+
+        public void Accept(Coin coin)
+        {
+            if (coin.Value() == 0)
+            {
+                ReturnTray.Add(coin);
+                return;
+            }
+
+            Coins.Add(coin);
+            Context.State = new CurrentValueState(this);
+        }
+
+        public void Dispense(string sku)
+        {
+            if (ProductInfoRepository.GetQuantityAvailable(sku) == 0)
+            {
+                Context.State = new SoldOutState(this);
+                return;
+            }
+
+            DispenseCallback(sku);
         }
     }
 }

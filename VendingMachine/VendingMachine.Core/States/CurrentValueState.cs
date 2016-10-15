@@ -1,19 +1,35 @@
-﻿using System.Collections.Generic;
-
-namespace Vending.Core.States
+﻿namespace Vending.Core.States
 {
     public class CurrentValueState : VendingMachineState
     {
-        private readonly IEnumerable<Coin> _coins;
-
-        public CurrentValueState(IEnumerable<Coin> coins)
+        public CurrentValueState(VendingMachineState state)
+            : base(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
         {
-            _coins = coins;
+        }
+
+        protected override void DispenseCallback(string sku)
+        {
+            var priceInCents = ProductInfoRepository.GetPrice(sku);
+            var currentTotal = CurrentTotal();
+
+            if (currentTotal < priceInCents)
+            {
+                Context.State = new PriceState(this, priceInCents.Value);
+            }
+            else
+            {
+                Output.Add(sku);
+                Coins.Clear();
+
+                Refund(currentTotal, priceInCents);
+
+                Context.State = new ThankYouState(this);
+            }
         }
 
         public override string Display()
         {
-            var total = ConvertCentsToDollars(CurrentTotal(_coins));
+            var total = ConvertCentsToDollars(CurrentTotal());
             return $"{total:C}";
         }
 

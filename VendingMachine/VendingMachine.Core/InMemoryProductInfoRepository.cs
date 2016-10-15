@@ -4,22 +4,33 @@ namespace Vending.Core
 {
     public class InMemoryProductInfoRepository : ProductInfoRepository
     {
-        private static readonly Dictionary<string, int> Info = new Dictionary<string, int>()
+        private static readonly Dictionary<string, ProductInfo> Info = new Dictionary<string, ProductInfo>()
         {
-            {"soda", 100},
-            {"candy", 65},
-            {"chips", 50}
+            {"soda", new ProductInfo() {Sku = "soda", Price = 100, QuantityOnHand = 10} },
+            {"candy", new ProductInfo() {Sku = "candy", Price = 65, QuantityOnHand = 10 } },
+            {"chips", new ProductInfo() {Sku = "chips", Price = 50, QuantityOnHand = 10 } }
         };
 
         public int? GetPrice(string sku)
         {
-            int price;
-            if (Info.TryGetValue(sku, out price))
+            ProductInfo product;
+            if (Info.TryGetValue(sku, out product))
             {
-                return price;
+                return product.Price;
             }
 
             return null;
+        }
+
+        public int GetQuantityAvailable(string sku)
+        {
+            ProductInfo product;
+            if (Info.TryGetValue(sku, out product))
+            {
+                return product.QuantityOnHand;
+            }
+
+            return 0;
         }
     }
 }
