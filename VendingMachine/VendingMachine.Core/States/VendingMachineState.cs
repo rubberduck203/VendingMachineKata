@@ -65,5 +65,11 @@ namespace Vending.Core.States
             coins.Add(coin);
             return true;
         }
+
+        public void ReturnCoins(List<Coin> coins, List<Coin> returnTray)
+        {
+            returnTray.AddRange(coins);
+            coins.Clear();
+        }
     }
 }
