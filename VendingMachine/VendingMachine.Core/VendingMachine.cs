@@ -21,21 +21,16 @@ namespace Vending.Core
 
         public VendingMachineState State { get; set; }
 
-        private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<string> _output = new List<string>();
 
         public IEnumerable<Coin> ReturnTray => State.ReturnTray;
         public IEnumerable<string> Output => _output;
 
-        public List<Coin> Coins
-        {
-            get { return State.Coins; }
-        }
 
         public void ReturnCoins()
         {
-            State.ReturnTray.AddRange(Coins);
-            Coins.Clear();
+            State.ReturnTray.AddRange(State.Coins);
+            State.Coins.Clear();
             State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
         }
 
@@ -54,7 +49,7 @@ namespace Vending.Core
             }
 
             var priceInCents = _productInfoRepository.GetPrice(sku);
-            var currentTotal = State.CurrentTotal(Coins);
+            var currentTotal = State.CurrentTotal(State.Coins);
 
             if (currentTotal < priceInCents)
             {
@@ -65,7 +60,7 @@ namespace Vending.Core
                 _output.Add(sku);
                 State = new ThankYouState(this, State.ReturnTray, State.Coins);
 
-                Coins.Clear();
+                State.Coins.Clear();
 
                 State.Refund(currentTotal, priceInCents);
             }
@@ -79,8 +74,8 @@ namespace Vending.Core
                 return;
             }
 
-            Coins.Add(coin);
-            State = new CurrentValueState(this, State.ReturnTray, Coins);
+            State.Coins.Add(coin);
+            State = new CurrentValueState(this, State.ReturnTray, State.Coins);
         }
 
         public string GetDisplayText()
