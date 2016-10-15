@@ -45,14 +45,7 @@ namespace Vending.Core
 
         public void Accept(Coin coin)
         {
-            if (coin.Value() == 0)
-            {
-                State.ReturnTray.Add(coin);
-                return;
-            }
-
-            State.Coins.Add(coin);
-            State = new CurrentValueState(this, State.ReturnTray, State.Coins, _productInfoRepository, _output);
+            State.Accept(coin);
         }
 
         public string GetDisplayText()

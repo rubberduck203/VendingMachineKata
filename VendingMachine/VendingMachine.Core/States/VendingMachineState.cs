@@ -67,5 +67,17 @@ namespace Vending.Core.States
             Coins.Clear();
             Context.State = new NoMoneyState(this);
         }
+
+        public void Accept(Coin coin)
+        {
+            if (coin.Value() == 0)
+            {
+                ReturnTray.Add(coin);
+                return;
+            }
+
+            Coins.Add(coin);
+            Context.State = new CurrentValueState(this);
+        }
     }
 }
