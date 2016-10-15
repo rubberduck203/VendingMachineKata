@@ -42,17 +42,7 @@ namespace Vending.Core
                 return;
             }
 
-            if (State is NoMoneyState)
-            {
-                State.Dispense(sku);
-                return;
-            }
-
-            if (State is CurrentValueState)
-            {
-                State.Dispense(sku);
-                return;
-            }
+            State.Dispense(sku);
         }
 
         public void Accept(Coin coin)
