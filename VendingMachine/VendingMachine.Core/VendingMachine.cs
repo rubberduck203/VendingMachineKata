@@ -10,21 +10,15 @@ namespace Vending.Core
 
     public class VendingMachine : StateContext
     {
-        private readonly ProductInfoRepository _productInfoRepository;
-
         public VendingMachine(ProductInfoRepository productInfoRepository)
         {
-            _productInfoRepository = productInfoRepository;
-            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository, _output);
+            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository, new List<string>());
         }
 
         public VendingMachineState State { get; set; }
 
-        private readonly List<string> _output = new List<string>();
-
         public IEnumerable<Coin> ReturnTray => State.ReturnTray;
-        public IEnumerable<string> Output => _output;
-
+        public IEnumerable<string> Output => State.Output;
 
         public void ReturnCoins()
         {
@@ -45,6 +39,5 @@ namespace Vending.Core
         {
             return State.Display();
         }
-
     }
 }
