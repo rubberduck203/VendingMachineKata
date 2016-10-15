@@ -58,7 +58,7 @@ namespace Vending.Core
             else
             {
                 _output.Add(sku);
-                State = new ThankYouState(this, State.ReturnTray, State.Coins);
+                State = new ThankYouState(this, State.ReturnTray, State.Coins, _productInfoRepository);
 
                 State.Coins.Clear();
 
@@ -81,12 +81,6 @@ namespace Vending.Core
         public string GetDisplayText()
         {
             var text = State.Display();
-
-            if (State is ThankYouState )
-            {
-                State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
-            }
-
             return text;
         }
 
