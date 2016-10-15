@@ -19,5 +19,9 @@ namespace Vending.Tests.Core
         {
             return QuantityAvailable;
         }
+
+        public void DecrementProductCount(string sku)
+        {
+        }
     }
 }

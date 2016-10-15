@@ -8,5 +8,6 @@
         int? GetPrice(string sku);
 
         int GetQuantityAvailable(string sku);
+        void DecrementProductCount(string sku);
     }
 }
