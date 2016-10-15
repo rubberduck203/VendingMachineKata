@@ -33,19 +33,7 @@ namespace Vending.Core
             var priceInCents = _productInfoRepository.GetPrice(sku);
             var currentTotal = State.CurrentTotal(_coins);
 
-            if (currentTotal < priceInCents)
-            {
-                State = new PriceState(this, priceInCents.Value);
-            }
-            else
-            {
-                _output.Add(sku);
-                _coins.Clear();
-
-                State.Refund(currentTotal, priceInCents, _returnTray);
-
-                State = new ThankYouState(this);
-            }
+            State.Dispense(currentTotal, sku, priceInCents, _coins, _returnTray, _output);
         }
 
         public void Accept(Coin coin)

@@ -72,5 +72,23 @@ namespace Vending.Core.States
             coins.Clear();
             Context.State = VendingMachineState.Default(Context);
         }
+
+        public void Dispense(int currentTotal, string sku, int? priceInCents, List<Coin> coins, List<Coin> returnTray, List<string> snackOutput)
+        {
+            if (currentTotal < priceInCents)
+            {
+                //fix: I don't like that the base class knows about it's inheritors. Smells funny.
+                Context.State = new PriceState(Context, priceInCents.Value);
+            }
+            else
+            {
+                snackOutput.Add(sku);
+                coins.Clear();
+
+                Refund(currentTotal, priceInCents, returnTray);
+
+                Context.State = new ThankYouState(Context);
+            }
+        }
     }
 }
