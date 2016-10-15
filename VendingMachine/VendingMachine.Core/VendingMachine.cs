@@ -27,10 +27,15 @@ namespace Vending.Core
         public IEnumerable<Coin> ReturnTray => State.ReturnTray;
         public IEnumerable<string> Output => _output;
 
+        public List<Coin> Coins
+        {
+            get { return State.Coins; }
+        }
+
         public void ReturnCoins()
         {
-            State.ReturnTray.AddRange(_coins);
-            _coins.Clear();
+            State.ReturnTray.AddRange(Coins);
+            Coins.Clear();
             State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
         }
 
@@ -49,7 +54,7 @@ namespace Vending.Core
             }
 
             var priceInCents = _productInfoRepository.GetPrice(sku);
-            var currentTotal = State.CurrentTotal(_coins);
+            var currentTotal = State.CurrentTotal(Coins);
 
             if (currentTotal < priceInCents)
             {
@@ -60,7 +65,7 @@ namespace Vending.Core
                 _output.Add(sku);
                 State = new ThankYouState(this, State.ReturnTray, State.Coins);
 
-                _coins.Clear();
+                Coins.Clear();
 
                 State.Refund(currentTotal, priceInCents);
             }
@@ -74,8 +79,8 @@ namespace Vending.Core
                 return;
             }
 
-            _coins.Add(coin);
-            State = new CurrentValueState(this, State.ReturnTray, _coins);
+            Coins.Add(coin);
+            State = new CurrentValueState(this, State.ReturnTray, Coins);
         }
 
         public string GetDisplayText()
