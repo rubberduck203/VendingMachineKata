@@ -29,9 +29,7 @@ namespace Vending.Core
 
         public void ReturnCoins()
         {
-            State.ReturnTray.AddRange(State.Coins);
-            State.Coins.Clear();
-            State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository, _output);
+            State.ReturnCoins();
         }
 
         public void Dispense(string sku)

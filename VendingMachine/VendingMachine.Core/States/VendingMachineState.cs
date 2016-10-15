@@ -60,5 +60,12 @@ namespace Vending.Core.States
                 ReturnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
             }
         }
+
+        public void ReturnCoins()
+        {
+            ReturnTray.AddRange(Coins);
+            Coins.Clear();
+            Context.State = new NoMoneyState(this);
+        }
     }
 }
