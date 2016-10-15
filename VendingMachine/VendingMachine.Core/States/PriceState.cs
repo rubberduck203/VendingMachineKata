@@ -6,6 +6,11 @@ namespace Vending.Core.States
     {
         private readonly decimal _priceInCents;
 
+        public PriceState(VendingMachineState state, int priceInCents)
+            :this(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output, priceInCents)
+        {
+        }
+
         public PriceState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output, int priceInCents)
             :base(context, returnTray, coins, productInfoRepository, output)
         {

@@ -5,6 +5,10 @@ namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
+        protected VendingMachineState(VendingMachineState state)
+            :this(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
+        { }
+
         protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
         {
             Context = context;
@@ -14,11 +18,11 @@ namespace Vending.Core.States
             ReturnTray = returnTray;
         }
 
-        protected StateContext Context { get; }
+        protected internal StateContext Context { get; }
         public List<Coin> Coins { get; }
         public List<Coin> ReturnTray { get; }
-        protected List<string> Output { get; }
-        protected ProductInfoRepository ProductInfoRepository { get; }
+        protected internal List<string> Output { get; }
+        protected internal ProductInfoRepository ProductInfoRepository { get; }
 
         public abstract string Display();
 

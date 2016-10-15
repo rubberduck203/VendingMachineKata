@@ -13,11 +13,11 @@ namespace Vending.Core.States
         {
             if (CurrentTotal(Coins) > 0)
             {
-                Context.State = new CurrentValueState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
+                Context.State = new CurrentValueState(this);
             }
             else
             {
-                Context.State = new NoMoneyState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
+                Context.State = new NoMoneyState(this);
             }
 
             return "SOLD OUT";

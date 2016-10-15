@@ -4,7 +4,12 @@ namespace Vending.Core.States
 {
     public class CurrentValueState : VendingMachineState
     {
-        public CurrentValueState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output) 
+        public CurrentValueState(VendingMachineState state)
+            : base(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
+        {
+        }
+
+        public CurrentValueState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
             : base(context, returnTray, coins, productInfoRepository, output)
         {
         }
@@ -16,7 +21,7 @@ namespace Vending.Core.States
 
             if (currentTotal < priceInCents)
             {
-                Context.State = new PriceState(Context, ReturnTray, Coins, ProductInfoRepository, Output, priceInCents.Value);
+                Context.State = new PriceState(this, priceInCents.Value);
             }
             else
             {
@@ -25,7 +30,7 @@ namespace Vending.Core.States
 
                 Refund(currentTotal, priceInCents);
 
-                Context.State = new ThankYouState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
+                Context.State = new ThankYouState(this);
             }
         }
 
