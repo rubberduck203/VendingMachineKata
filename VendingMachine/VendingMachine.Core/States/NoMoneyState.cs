@@ -18,7 +18,7 @@ namespace Vending.Core.States
             return "INSERT COIN";
         }
 
-        public override void Dispense(string sku)
+        protected override void DispenseCallback(string sku)
         {
             var priceInCents = ProductInfoRepository.GetPrice(sku) ?? 0;
             Context.State = new PriceState(this, priceInCents);

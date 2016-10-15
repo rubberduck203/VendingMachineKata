@@ -34,12 +34,6 @@ namespace Vending.Core
 
         public void Dispense(string sku)
         {
-            if (_productInfoRepository.GetQuantityAvailable(sku) == 0)
-            {
-                State = new SoldOutState(this, State.ReturnTray, State.Coins, _productInfoRepository, _output);
-                return;
-            }
-
             State.Dispense(sku);
         }
 

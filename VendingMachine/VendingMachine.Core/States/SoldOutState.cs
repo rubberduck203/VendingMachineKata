@@ -5,6 +5,11 @@ namespace Vending.Core.States
 {
     internal class SoldOutState : VendingMachineState
     {
+        public SoldOutState(VendingMachineState state)
+            : base(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
+        {
+        }
+
         public SoldOutState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output) 
             : base(context, returnTray, coins, productInfoRepository, output)
         {
@@ -24,10 +29,9 @@ namespace Vending.Core.States
             return "SOLD OUT";
         }
 
-        public override void Dispense(string sku)
+        protected override void DispenseCallback(string sku)
         {
-            //Asserting because this action should do nothing if it happens in production.
-            Debug.Assert(false, "You're trying to Dispense from an unsupported state.");
+            // no op
         }
     }
 }

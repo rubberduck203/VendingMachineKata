@@ -25,7 +25,7 @@ namespace Vending.Core.States
         protected internal ProductInfoRepository ProductInfoRepository { get; }
 
         public abstract string Display();
-        public abstract void Dispense(string sku);
+        protected abstract void DispenseCallback(string sku);
 
         public int CurrentTotal()
         {
@@ -78,6 +78,17 @@ namespace Vending.Core.States
 
             Coins.Add(coin);
             Context.State = new CurrentValueState(this);
+        }
+
+        public void Dispense(string sku)
+        {
+            if (ProductInfoRepository.GetQuantityAvailable(sku) == 0)
+            {
+                Context.State = new SoldOutState(this);
+                return;
+            }
+
+            DispenseCallback(sku);
         }
     }
 }

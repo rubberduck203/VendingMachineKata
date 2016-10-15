@@ -9,12 +9,7 @@ namespace Vending.Core.States
         {
         }
 
-        public CurrentValueState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
-            : base(context, returnTray, coins, productInfoRepository, output)
-        {
-        }
-
-        public override void Dispense(string sku)
+        protected override void DispenseCallback(string sku)
         {
             var priceInCents = ProductInfoRepository.GetPrice(sku);
             var currentTotal = CurrentTotal();

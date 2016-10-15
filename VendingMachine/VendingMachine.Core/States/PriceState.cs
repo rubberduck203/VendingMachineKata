@@ -24,10 +24,9 @@ namespace Vending.Core.States
             return $"PRICE: {_priceInCents/100:C}";
         }
 
-        public override void Dispense(string sku)
+        protected override void DispenseCallback(string sku)
         {
-            //Asserting because this action should do nothing if it happens in production.
-            Debug.Assert(false, "You're trying to Dispense from an unsupported state.");
+            // no op
         }
     }
 }
