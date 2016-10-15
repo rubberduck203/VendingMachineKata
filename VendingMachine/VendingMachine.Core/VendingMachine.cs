@@ -31,6 +31,12 @@ namespace Vending.Core
 
         public void Dispense(string sku)
         {
+            if (_productInfoRepository.GetQuantityAvailable(sku) == 0)
+            {
+                _machineState = new SoldOutState();
+                return;
+            }
+
             var priceInCents = _productInfoRepository.GetPrice(sku);
             var currentTotal = _machineState.CurrentTotal(_coins);
 
@@ -65,7 +71,7 @@ namespace Vending.Core
         {
             var text = _machineState.Display();
 
-            if (_machineState is ThankYouState)
+            if (_machineState is ThankYouState || _machineState is SoldOutState)
             {
                 _machineState = new InsertCoinState();
             }
