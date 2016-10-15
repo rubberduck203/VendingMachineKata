@@ -24,12 +24,5 @@ namespace Vending.Tests.Core
             VendingMachineState state = new PriceState(_context, new List<Coin>(), new List<Coin>(), _productInfoRepository, new List<string>(), new List<Coin>(), 100);
             Assert.AreEqual("PRICE: $1.00", state.Display());
         }
-
-        [TestMethod]
-        public void InsertCoinState_Displays_InsertCoin()
-        {
-            VendingMachineState state = new NoMoneyState(_context, new List<Coin>(), new List<Coin>(), _productInfoRepository, new List<string>(), new List<Coin>());
-            Assert.AreEqual("INSERT COIN", state.Display());
-        }
     }
 }

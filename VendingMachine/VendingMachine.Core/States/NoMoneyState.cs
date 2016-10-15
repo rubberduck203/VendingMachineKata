@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core.States
 {
@@ -15,7 +16,11 @@ namespace Vending.Core.States
 
         public override string Display()
         {
-            return "INSERT COIN";
+            if (Vault.Any(c => c == Coin.Dime || c == Coin.Nickel))
+            {
+                return "INSERT COIN";
+            }
+            return "EXACT CHANGE ONLY";
         }
 
         protected override void DispenseCallback(string sku)

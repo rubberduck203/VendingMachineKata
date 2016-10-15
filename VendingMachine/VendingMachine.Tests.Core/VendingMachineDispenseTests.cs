@@ -114,10 +114,13 @@ namespace Vending.Tests.Core
         [TestMethod]
         public void VendingMachine_AfterDispense_MoneyIsPlacedInVault()
         {
+            var expected = _vendingMachine.Vault.ToList();
+            expected.AddRange(Enumerable.Repeat(Coin.Quarter, 3));
+
             InsertCoins(_vendingMachine, Coin.Quarter, 3);
             _vendingMachine.Dispense("candy");
 
-            CollectionAssert.AreEqual(Enumerable.Repeat(Coin.Quarter, 3).ToList(), _vendingMachine.Vault.ToList());
+            CollectionAssert.AreEqual(expected, _vendingMachine.Vault.ToList());
         }
 
         private void InsertCoins(VendingMachine machine, Coin coin, int count)
