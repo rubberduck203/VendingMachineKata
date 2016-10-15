@@ -5,10 +5,14 @@ namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
+        public StateContext Context { get; }
+        public List<Coin> Coins { get; }
         private readonly List<Coin> _returnTray;
 
-        protected VendingMachineState(List<Coin> returnTray)
+        protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coins)
         {
+            Context = context;
+            Coins = coins;
             _returnTray = returnTray;
         }
 
@@ -47,6 +51,11 @@ namespace Vending.Core.States
             {
                 _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
             }
+        }
+
+        public virtual void Dispense(string sku)
+        {
+            
         }
     }
 }

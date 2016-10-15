@@ -6,8 +6,8 @@ namespace Vending.Core.States
     {
         private readonly decimal _priceInCents;
 
-        public PriceState(List<Coin> returnTray, int priceInCents)
-            :base(returnTray)
+        public PriceState(StateContext context, List<Coin> returnTray, List<Coin> coins, int priceInCents)
+            :base(context, returnTray, coins)
         {
             _priceInCents = priceInCents;
         }

@@ -4,8 +4,8 @@ namespace Vending.Core.States
 {
     public class ThankYouState : VendingMachineState
     {
-        public ThankYouState(List<Coin> returnTray) 
-            : base(returnTray)
+        public ThankYouState(StateContext context, List<Coin> returnTray, List<Coin> coins) 
+            : base(context, returnTray, coins)
         {
         }
 

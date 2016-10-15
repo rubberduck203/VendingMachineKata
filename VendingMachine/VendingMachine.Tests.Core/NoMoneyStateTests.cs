@@ -10,10 +10,20 @@ namespace Vending.Tests.Core
     [TestClass]
     public class NoMoneyStateTests
     {
+        private StateContext _context;
+        private ProductInfoRepository _productInfoRepository;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _productInfoRepository = new InMemoryProductInfoRepository();
+            _context = new VendingMachine(_productInfoRepository);
+        }
+
         [TestMethod]
         public void NoMoneyState_WhenRefund_NoMoneyRefunded()
         {
-            var state = new NoMoneyState(new List<Coin>());
+            var state = new NoMoneyState(_context, new List<Coin>(), new List<Coin>(), _productInfoRepository);
             state.Refund(0, 0);
 
             CollectionAssert.AreEqual(new List<Coin>(), state.ReturnTray.ToList());

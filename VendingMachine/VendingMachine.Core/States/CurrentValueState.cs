@@ -4,17 +4,14 @@ namespace Vending.Core.States
 {
     public class CurrentValueState : VendingMachineState
     {
-        private readonly IEnumerable<Coin> _coins;
-
-        public CurrentValueState(List<Coin> returnTray, IEnumerable<Coin> coins) 
-            : base(returnTray)
+        public CurrentValueState(StateContext context, List<Coin> returnTray, List<Coin> coins) 
+            : base(context, returnTray, coins)
         {
-            _coins = coins;
         }
 
         public override string Display()
         {
-            var total = ConvertCentsToDollars(CurrentTotal(_coins));
+            var total = ConvertCentsToDollars(CurrentTotal(Coins));
             return $"{total:C}";
         }
 

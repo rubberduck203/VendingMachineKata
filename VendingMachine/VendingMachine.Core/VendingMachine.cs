@@ -16,9 +16,10 @@ namespace Vending.Core
         public VendingMachine(ProductInfoRepository productInfoRepository)
         {
             _productInfoRepository = productInfoRepository;
+            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository);
         }
 
-        public VendingMachineState State { get; set; } = new NoMoneyState(new List<Coin>());
+        public VendingMachineState State { get; set; }
 
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<string> _output = new List<string>();
@@ -30,14 +31,20 @@ namespace Vending.Core
         {
             State.ReturnTray.AddRange(_coins);
             _coins.Clear();
-            State = new NoMoneyState(State.ReturnTray);
+            State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
         }
 
         public void Dispense(string sku)
         {
             if (_productInfoRepository.GetQuantityAvailable(sku) == 0)
             {
-                State = new SoldOutState(State.ReturnTray);
+                State = new SoldOutState(this, State.ReturnTray, State.Coins, _productInfoRepository);
+                return;
+            }
+
+            if (State is NoMoneyState)
+            {
+                State.Dispense(sku);
                 return;
             }
 
@@ -46,12 +53,12 @@ namespace Vending.Core
 
             if (currentTotal < priceInCents)
             {
-                State = new PriceState(State.ReturnTray, priceInCents.Value);
+                State = new PriceState(this, State.ReturnTray, State.Coins, priceInCents.Value);
             }
             else
             {
                 _output.Add(sku);
-                State = new ThankYouState(State.ReturnTray);
+                State = new ThankYouState(this, State.ReturnTray, State.Coins);
 
                 _coins.Clear();
 
@@ -68,7 +75,7 @@ namespace Vending.Core
             }
 
             _coins.Add(coin);
-            State = new CurrentValueState(State.ReturnTray, _coins);
+            State = new CurrentValueState(this, State.ReturnTray, _coins);
         }
 
         public string GetDisplayText()
@@ -77,7 +84,7 @@ namespace Vending.Core
 
             if (State is ThankYouState || State is SoldOutState)
             {
-                State = new NoMoneyState(State.ReturnTray);
+                State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
             }
 
             return text;
