@@ -4,7 +4,12 @@ using Vending.Core.States;
 
 namespace Vending.Core
 {
-    public class VendingMachine
+    public interface StateContext
+    {
+        VendingMachineState State { get; set; }
+    }
+
+    public class VendingMachine : StateContext
     {
         private readonly ProductInfoRepository _productInfoRepository;
 
@@ -13,44 +18,44 @@ namespace Vending.Core
             _productInfoRepository = productInfoRepository;
         }
 
-        private VendingMachineState _machineState = new NoMoneyState(new List<Coin>());
+        public VendingMachineState State { get; set; } = new NoMoneyState(new List<Coin>());
 
         private readonly List<Coin> _coins = new List<Coin>();
         private readonly List<string> _output = new List<string>();
 
-        public IEnumerable<Coin> ReturnTray => _machineState.ReturnTray;
+        public IEnumerable<Coin> ReturnTray => State.ReturnTray;
         public IEnumerable<string> Output => _output;
 
         public void ReturnCoins()
         {
-            _machineState.ReturnTray.AddRange(_coins);
+            State.ReturnTray.AddRange(_coins);
             _coins.Clear();
-            _machineState = new NoMoneyState(_machineState.ReturnTray);
+            State = new NoMoneyState(State.ReturnTray);
         }
 
         public void Dispense(string sku)
         {
             if (_productInfoRepository.GetQuantityAvailable(sku) == 0)
             {
-                _machineState = new SoldOutState(_machineState.ReturnTray);
+                State = new SoldOutState(State.ReturnTray);
                 return;
             }
 
             var priceInCents = _productInfoRepository.GetPrice(sku);
-            var currentTotal = _machineState.CurrentTotal(_coins);
+            var currentTotal = State.CurrentTotal(_coins);
 
             if (currentTotal < priceInCents)
             {
-                _machineState = new PriceState(_machineState.ReturnTray, priceInCents.Value);
+                State = new PriceState(State.ReturnTray, priceInCents.Value);
             }
             else
             {
                 _output.Add(sku);
-                _machineState = new ThankYouState(_machineState.ReturnTray);
+                State = new ThankYouState(State.ReturnTray);
 
                 _coins.Clear();
 
-                _machineState.Refund(currentTotal, priceInCents);
+                State.Refund(currentTotal, priceInCents);
             }
         }
 
@@ -58,21 +63,21 @@ namespace Vending.Core
         {
             if (coin.Value() == 0)
             {
-                _machineState.ReturnTray.Add(coin);
+                State.ReturnTray.Add(coin);
                 return;
             }
 
             _coins.Add(coin);
-            _machineState = new CurrentValueState(_machineState.ReturnTray, _coins);
+            State = new CurrentValueState(State.ReturnTray, _coins);
         }
 
         public string GetDisplayText()
         {
-            var text = _machineState.Display();
+            var text = State.Display();
 
-            if (_machineState is ThankYouState || _machineState is SoldOutState)
+            if (State is ThankYouState || State is SoldOutState)
             {
-                _machineState = new NoMoneyState(_machineState.ReturnTray);
+                State = new NoMoneyState(State.ReturnTray);
             }
 
             return text;

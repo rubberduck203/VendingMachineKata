@@ -18,5 +18,14 @@ namespace Vending.Tests.Core
 
             CollectionAssert.AreEqual(new List<Coin>(), state.ReturnTray.ToList());
         }
+
+        [TestMethod]
+        public void NoMoneyState_WhenProductSelected_MoveToPriceState()
+        {
+            var vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
+            vendingMachine.Dispense("candy");
+
+            Assert.IsInstanceOfType(vendingMachine.State, typeof(PriceState));
+        }
     }
 }
