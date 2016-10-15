@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CoinReturnTests.cs" />
     <Compile Include="DisplayStateTests.cs" />
+    <Compile Include="FakeProductInfoRepository.cs" />
     <Compile Include="RefundCalculatorTests.cs" />
     <Compile Include="SoldOutTests.cs" />
     <Compile Include="VendingMachineCoinInsertionTests.cs" />
