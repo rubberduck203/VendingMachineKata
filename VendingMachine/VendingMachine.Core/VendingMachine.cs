@@ -38,7 +38,7 @@ namespace Vending.Core
         {
             if (_productInfoRepository.GetQuantityAvailable(sku) == 0)
             {
-                State = new SoldOutState(this, State.ReturnTray, State.Coins, _productInfoRepository);
+                State = new SoldOutState(this, State.ReturnTray, State.Coins, _productInfoRepository, _output);
                 return;
             }
 
@@ -48,21 +48,10 @@ namespace Vending.Core
                 return;
             }
 
-            var priceInCents = _productInfoRepository.GetPrice(sku);
-            var currentTotal = State.CurrentTotal(State.Coins);
-
-            if (currentTotal < priceInCents)
+            if (State is CurrentValueState)
             {
-                State = new PriceState(this, State.ReturnTray, State.Coins, priceInCents.Value);
-            }
-            else
-            {
-                _output.Add(sku);
-                State = new ThankYouState(this, State.ReturnTray, State.Coins, _productInfoRepository);
-
-                State.Coins.Clear();
-
-                State.Refund(currentTotal, priceInCents);
+                State.Dispense(sku);
+                return;
             }
         }
 
@@ -75,7 +64,7 @@ namespace Vending.Core
             }
 
             State.Coins.Add(coin);
-            State = new CurrentValueState(this, State.ReturnTray, State.Coins);
+            State = new CurrentValueState(this, State.ReturnTray, State.Coins, _productInfoRepository, _output);
         }
 
         public string GetDisplayText()
