@@ -25,9 +25,14 @@ namespace Vending.Core
 
         public void ReturnCoins()
         {
-            _returnTray.AddRange(_coins);
-            _coins.Clear();
+            ReturnCoins(_coins, _returnTray);
             State = VendingMachineState.Default(this);
+        }
+
+        private void ReturnCoins(List<Coin> coins, List<Coin> returnTray)
+        {
+            returnTray.AddRange(coins);
+            coins.Clear();
         }
 
         public void Dispense(string sku)
