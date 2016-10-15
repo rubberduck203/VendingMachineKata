@@ -40,11 +40,11 @@ namespace Vending.Core
             else
             {
                 _output.Add(sku);
-                State = new ThankYouState(this);
-
                 _coins.Clear();
 
                 State.Refund(currentTotal, priceInCents, _returnTray);
+
+                State = new ThankYouState(this);
             }
         }
 
