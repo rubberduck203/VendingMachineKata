@@ -4,12 +4,9 @@ namespace Vending.Core.States
 {
     public class NoMoneyState : VendingMachineState
     {
-        private readonly ProductInfoRepository _productInfoRepository;
-
-        public NoMoneyState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository)
-            :base(context, returnTray, coins)
+        public NoMoneyState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
+            :base(context, returnTray, coins, productInfoRepository, output)
         {
-            _productInfoRepository = productInfoRepository;
         }
 
         public override string Display()
@@ -19,8 +16,8 @@ namespace Vending.Core.States
 
         public override void Dispense(string sku)
         {
-            var priceInCents = _productInfoRepository.GetPrice(sku) ?? 0;
-            Context.State = new PriceState(Context, ReturnTray, Coins, priceInCents);
+            var priceInCents = ProductInfoRepository.GetPrice(sku) ?? 0;
+            Context.State = new PriceState(Context, ReturnTray, Coins, ProductInfoRepository, Output, priceInCents);
         }
     }
 }

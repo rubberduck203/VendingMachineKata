@@ -16,7 +16,7 @@ namespace Vending.Core
         public VendingMachine(ProductInfoRepository productInfoRepository)
         {
             _productInfoRepository = productInfoRepository;
-            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository);
+            State = new NoMoneyState(this, new List<Coin>(), new List<Coin>(), productInfoRepository, _output);
         }
 
         public VendingMachineState State { get; set; }
@@ -31,7 +31,7 @@ namespace Vending.Core
         {
             State.ReturnTray.AddRange(State.Coins);
             State.Coins.Clear();
-            State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository);
+            State = new NoMoneyState(this, State.ReturnTray, State.Coins, _productInfoRepository, _output);
         }
 
         public void Dispense(string sku)

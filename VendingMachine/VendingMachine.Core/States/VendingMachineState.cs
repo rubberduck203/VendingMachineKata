@@ -7,16 +7,22 @@ namespace Vending.Core.States
     {
         public StateContext Context { get; }
         public List<Coin> Coins { get; }
-        private readonly List<Coin> _returnTray;
 
-        protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coins)
+        protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
         {
             Context = context;
             Coins = coins;
-            _returnTray = returnTray;
+            ProductInfoRepository = productInfoRepository;
+            Output = output;
+            ReturnTray = returnTray;
         }
 
-        public List<Coin> ReturnTray => _returnTray;
+        public List<Coin> ReturnTray { get; }
+
+        public ProductInfoRepository ProductInfoRepository { get; set; }
+
+        public List<string> Output { get; set; }
+
         public abstract string Display();
 
         public  int CurrentTotal(IEnumerable<Coin> coins)
@@ -49,7 +55,7 @@ namespace Vending.Core.States
 
             foreach (var coinCount in refund)
             {
-                _returnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
+                ReturnTray.AddRange(Enumerable.Repeat(coinCount.Key, coinCount.Value));
             }
         }
 

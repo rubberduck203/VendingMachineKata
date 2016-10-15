@@ -4,17 +4,14 @@ namespace Vending.Core.States
 {
     public class ThankYouState : VendingMachineState
     {
-        private readonly ProductInfoRepository _productInfoRepository;
-
-        public ThankYouState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository) 
-            : base(context, returnTray, coins)
+        public ThankYouState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output) 
+            : base(context, returnTray, coins, productInfoRepository, output)
         {
-            _productInfoRepository = productInfoRepository;
         }
 
         public override string Display()
         {
-            Context.State = new NoMoneyState(Context, ReturnTray, Coins, _productInfoRepository);
+            Context.State = new NoMoneyState(Context, ReturnTray, Coins, ProductInfoRepository, Output);
 
             return "THANK YOU!";
         }
