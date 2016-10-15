@@ -17,7 +17,7 @@ namespace Vending.Core.States
         public override void Dispense(string sku)
         {
             var priceInCents = ProductInfoRepository.GetPrice(sku);
-            var currentTotal = CurrentTotal(Coins);
+            var currentTotal = CurrentTotal();
 
             if (currentTotal < priceInCents)
             {
@@ -36,7 +36,7 @@ namespace Vending.Core.States
 
         public override string Display()
         {
-            var total = ConvertCentsToDollars(CurrentTotal(Coins));
+            var total = ConvertCentsToDollars(CurrentTotal());
             return $"{total:C}";
         }
 

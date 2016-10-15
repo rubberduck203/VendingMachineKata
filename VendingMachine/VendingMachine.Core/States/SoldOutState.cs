@@ -12,7 +12,7 @@ namespace Vending.Core.States
 
         public override string Display()
         {
-            if (CurrentTotal(Coins) > 0)
+            if (CurrentTotal() > 0)
             {
                 Context.State = new CurrentValueState(this);
             }

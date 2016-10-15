@@ -27,7 +27,7 @@ namespace Vending.Core.States
         public abstract string Display();
         public abstract void Dispense(string sku);
 
-        public  int CurrentTotal(IEnumerable<Coin> coins)
+        public int CurrentTotal()
         {
             var counts = new Dictionary<Coin, int>()
             {
@@ -36,7 +36,7 @@ namespace Vending.Core.States
                 {Coin.Quarter, 0}
             };
 
-            foreach (var coin in coins)
+            foreach (var coin in Coins)
             {
                 counts[coin]++;
             }
