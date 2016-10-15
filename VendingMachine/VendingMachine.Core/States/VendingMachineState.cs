@@ -4,9 +4,11 @@ namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
+        private readonly List<Coin> _returnTray = new List<Coin>();
+        public IEnumerable<Coin> ReturnTray => _returnTray;
         public abstract string Display();
 
-        public virtual int CurrentTotal(IEnumerable<Coin> coins)
+        public  int CurrentTotal(IEnumerable<Coin> coins)
         {
             var counts = new Dictionary<Coin, int>()
             {
@@ -27,6 +29,11 @@ namespace Vending.Core.States
             }
 
             return total;
+        }
+
+        public virtual void Refund()
+        {
+            
         }
     }
 }
