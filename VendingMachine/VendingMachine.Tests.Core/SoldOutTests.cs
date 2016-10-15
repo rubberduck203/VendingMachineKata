@@ -19,17 +19,17 @@ namespace Vending.Tests.Core
             Assert.AreEqual("INSERT COIN", vendingMachine.GetDisplayText());
         }
 
-        [Ignore]
         [TestMethod]
         public void VendingMachine_WhenSoldOutAndMoneyIsInMachine_DisplaySoldOutThenCurrentAmount()
         {
             var fakeProductInfoRepository = new FakeProductInfoRepository() { QuantityAvailable = 0, Price = 65 };
             var vendingMachine = new VendingMachine(fakeProductInfoRepository);
 
+            vendingMachine.Accept(Coin.Quarter);
             vendingMachine.Dispense("candy");
 
             Assert.AreEqual("SOLD OUT", vendingMachine.GetDisplayText());
-            Assert.AreEqual("$0.65", vendingMachine.GetDisplayText());
+            Assert.AreEqual("$0.25", vendingMachine.GetDisplayText());
         }
     }
 }
