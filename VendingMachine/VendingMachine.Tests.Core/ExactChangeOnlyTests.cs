@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Vending.Core;
-using Vending.Core.States;
 
 namespace Vending.Tests.Core
 {
