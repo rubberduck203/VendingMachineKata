@@ -55,9 +55,8 @@ namespace Vending.Core
             {
                 return false;
             }
-
-            var refund = CalculateRefund(priceInCents, 50);
-            if (refund[Coin.Dime] > vault.Count(c => c == Coin.Dime))
+            
+            if ( vault.Count(c => c == Coin.Nickel) < 3)
             {
                 return false;
             }

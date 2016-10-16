@@ -34,15 +34,6 @@ namespace Vending.Tests.Core
         }
 
         [TestMethod]
-        public void RefundCalculator_WhenPrice30_And2DimesInVault_CanMakeChange()
-        {
-            var calculator = new RefundCalculator();
-            var vault = Enumerable.Repeat(Coin.Dime, 2);
-
-            Assert.IsTrue(calculator.CanMakeChange(30, vault));
-        }
-
-        [TestMethod]
         public void RefundCalculator_WhenNoCoinsInVault_ExactChangeOnly()
         {
             var calculator = new RefundCalculator();
@@ -50,29 +41,10 @@ namespace Vending.Tests.Core
         }
 
         [TestMethod]
-        public void RefundCalculator_WhenPrice30_And4NickelsInVault_ExactChangeOnly()
-        {
-            /* 
-             * Even though we could make change with 4 Nickels, our refund calculator
-             * currently won't, even if it has 4 nickels, but not 2 dimes.
-             */
-
-            var calculator = new RefundCalculator();
-            Assert.IsFalse(calculator.CanMakeChange(30, Enumerable.Repeat(Coin.Nickel, 4)));
-        }
-
-        [TestMethod]
-        public void RefundCalculator_WhenPrice30_And1QuarterInVault_ExactChangeOnly()
+        public void RefundCalculator_WhenLessThanThreeNickelsInVault_ExactChangeOnly()
         {
             var calculator = new RefundCalculator();
-            Assert.IsFalse(calculator.CanMakeChange(30, new List<Coin>(1) { Coin.Quarter }));
-        }
-
-        [TestMethod]
-        public void RefundCalculator_WhenPrice25_And1QuarterInVault_CanMakeChange()
-        {
-            var calculator = new RefundCalculator();
-            Assert.IsTrue(calculator.CanMakeChange(25, new List<Coin>(1) { Coin.Quarter }));
+            Assert.IsFalse(calculator.CanMakeChange(0, Enumerable.Repeat(Coin.Nickel, 2)));
         }
     }
 }
