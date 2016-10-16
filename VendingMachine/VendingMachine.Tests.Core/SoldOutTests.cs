@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Vending.Core;
+using Vending.Tests.Core.Fakes;
 
 namespace Vending.Tests.Core
 {

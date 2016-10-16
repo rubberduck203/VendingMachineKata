@@ -1,6 +1,6 @@
 ﻿using Vending.Core;
 
-namespace Vending.Tests.Core
+namespace Vending.Tests.Core.Fakes
 {
     public class FakeProductInfoRepository : ProductInfoRepository
     {
