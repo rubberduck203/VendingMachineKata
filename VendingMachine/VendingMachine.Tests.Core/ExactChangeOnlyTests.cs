@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Vending.Core;
@@ -58,6 +59,20 @@ namespace Vending.Tests.Core
 
             var calculator = new RefundCalculator();
             Assert.IsFalse(calculator.CanMakeChange(30, Enumerable.Repeat(Coin.Nickel, 4)));
+        }
+
+        [TestMethod]
+        public void RefundCalculator_WhenPrice30_And1QuarterInVault_ExactChangeOnly()
+        {
+            var calculator = new RefundCalculator();
+            Assert.IsFalse(calculator.CanMakeChange(30, new List<Coin>(1) { Coin.Quarter }));
+        }
+
+        [TestMethod]
+        public void RefundCalculator_WhenPrice25_And1QuarterInVault_CanMakeChange()
+        {
+            var calculator = new RefundCalculator();
+            Assert.IsTrue(calculator.CanMakeChange(25, new List<Coin>(1) { Coin.Quarter }));
         }
     }
 }
