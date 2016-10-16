@@ -7,12 +7,7 @@ namespace Vending.Core
     {
         public IDictionary<Coin, int> CalculateRefund(int priceInCents, int paidInCents)
         {
-            var refund = new Dictionary<Coin, int>()
-            {
-                {Coin.Nickel, 0},
-                {Coin.Dime, 0},
-                {Coin.Quarter, 0}
-            };
+            IDictionary<Coin, int> refund = EmptyCoinDictionary();
 
             var refundValue = paidInCents - priceInCents;
 
@@ -63,12 +58,7 @@ namespace Vending.Core
              * See Issue #
              */
 
-            var coinCounts = new Dictionary<Coin, int>()
-            {
-                {Coin.Nickel, 0},
-                {Coin.Dime, 0},
-                {Coin.Quarter, 0}
-            };
+            IDictionary<Coin, int> coinCounts = EmptyCoinDictionary();
 
             foreach (var coin in vault)
             {
@@ -82,11 +72,20 @@ namespace Vending.Core
                     default:
                         //do nothing with unsupported coins
                         break;
-                    
                 }
             }
 
             return coinCounts.All(count => count.Value >= 5);
+        }
+
+        private static IDictionary<Coin, int> EmptyCoinDictionary()
+        {
+            return new Dictionary<Coin, int>()
+            {
+                {Coin.Nickel, 0},
+                {Coin.Dime, 0},
+                {Coin.Quarter, 0}
+            };
         }
     }
 }
