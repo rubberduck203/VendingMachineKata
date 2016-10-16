@@ -21,9 +21,7 @@ The following display states exist:
  4. Display Thank you!
  5. Sold Out
 
-![state diagram](statediagram.png)
-
-TODO: Add state diagram from notebook
+![state diagram](StateDiagram.png)
 
 # Future Improvements
 
