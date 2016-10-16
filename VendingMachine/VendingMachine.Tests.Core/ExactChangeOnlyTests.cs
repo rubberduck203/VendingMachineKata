@@ -37,14 +37,40 @@ namespace Vending.Tests.Core
         public void RefundCalculator_WhenNoCoinsInVault_ExactChangeOnly()
         {
             var calculator = new RefundCalculator();
-            Assert.IsFalse(calculator.CanMakeChange(30, Enumerable.Empty<Coin>()));
+            Assert.IsFalse(calculator.CanMakeChange(Enumerable.Empty<Coin>()));
         }
 
         [TestMethod]
-        public void RefundCalculator_WhenLessThanThreeNickelsInVault_ExactChangeOnly()
+        public void RefundCalculator_WhenLessThanFiveNickelsInVault_ExactChangeOnly()
         {
             var calculator = new RefundCalculator();
-            Assert.IsFalse(calculator.CanMakeChange(0, Enumerable.Repeat(Coin.Nickel, 2)));
+            Assert.IsFalse(calculator.CanMakeChange(Enumerable.Repeat(Coin.Nickel, 4)));
+        }
+
+        [TestMethod]
+        public void RefundCalculator_WhenLessThanFiveDimesInVault_ExactChangeOnly()
+        {
+            var calculator = new RefundCalculator();
+            Assert.IsFalse(calculator.CanMakeChange(Enumerable.Repeat(Coin.Dime, 4)));
+
+        }
+
+        [TestMethod]
+        public void RefundCalculator_WhenLessThan5QuartersInVault_ExactChangeOnly()
+        {
+            var calculator = new RefundCalculator();
+            Assert.IsFalse(calculator.CanMakeChange(Enumerable.Repeat(Coin.Quarter, 4)));
+        }
+
+        [TestMethod]
+        public void RefundCalculator_When5OfEachDenominationInVault_CanMakeChange()
+        {
+            var calculator = new RefundCalculator();
+            var vault = Enumerable.Repeat(Coin.Nickel, 5)
+                .Concat(Enumerable.Repeat(Coin.Dime, 5))
+                .Concat(Enumerable.Repeat(Coin.Quarter, 5));
+
+            Assert.IsTrue(calculator.CanMakeChange(vault));
         }
     }
 }

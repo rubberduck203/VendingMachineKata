@@ -49,14 +49,32 @@ namespace Vending.Core
             return nickels;
         }
 
-        public bool CanMakeChange(int priceInCents, IEnumerable<Coin> vault)
+        public bool CanMakeChange(IEnumerable<Coin> vault)
         {
+            /*
+             * So, we could spend ages working out an algorithm to work this problem out
+             * for the generic case, or we can hard code a suboptimal solution that lets me 
+             * ship today.
+             * 
+             * TODO: Replace with smarter algorithm.
+             */
+
             if (!vault.Any())
             {
                 return false;
             }
-            
-            if ( vault.Count(c => c == Coin.Nickel) < 3)
+
+            if (vault.Count(c => c == Coin.Nickel) < 5)
+            {
+                return false;
+            }
+
+            if (vault.Count(c => c == Coin.Dime) < 5)
+            {
+                return false;
+            }
+
+            if (vault.Count(c => c == Coin.Quarter) < 5)
             {
                 return false;
             }
