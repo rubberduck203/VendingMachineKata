@@ -55,7 +55,7 @@ namespace Vending.Core
              * Perhaps create a fallback algorithm for the CalculateRefund method, 
              * or change it entirely to use the Greedy algorithm.
              * 
-             * See Issue #
+             * See Issues #6 & #14
              */
 
             IDictionary<Coin, int> coinCounts = EmptyCoinDictionary();
