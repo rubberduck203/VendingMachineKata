@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Coin.cs" />
     <Compile Include="ProductInfo.cs" />
+    <Compile Include="States\StateContext.cs" />
     <Compile Include="States\SoldOutState.cs" />
     <Compile Include="States\CurrentValueState.cs" />
     <Compile Include="InMemoryProductInfoRepository.cs" />
