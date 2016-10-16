@@ -17,12 +17,7 @@ namespace Vending.Core.States
         public override string Display()
         {
             var refundCalculator = new RefundCalculator();
-            if (refundCalculator.CanMakeChange(Vault))
-            {
-                return "INSERT COIN";
-            }
-
-            return "EXACT CHANGE ONLY";
+            return refundCalculator.CanMakeChange(Vault) ? "INSERT COIN" : "EXACT CHANGE ONLY";
         }
 
         protected override void DispenseCallback(string sku)
