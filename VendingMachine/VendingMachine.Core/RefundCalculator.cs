@@ -59,11 +59,6 @@ namespace Vending.Core
              * TODO: Replace with smarter algorithm.
              */
 
-            if (!vault.Any())
-            {
-                return false;
-            }
-
             if (vault.Count(c => c == Coin.Nickel) < 5)
             {
                 return false;
