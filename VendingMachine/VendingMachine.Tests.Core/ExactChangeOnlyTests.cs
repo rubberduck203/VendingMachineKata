@@ -40,5 +40,12 @@ namespace Vending.Tests.Core
 
             Assert.IsTrue(calculator.CanMakeChange(30, vault));
         }
+
+        [TestMethod]
+        public void RefundCalculator_WhenNoCoinsInVault_ExactChangeOnly()
+        {
+            var calculator = new RefundCalculator();
+            Assert.IsFalse(calculator.CanMakeChange(30, Enumerable.Empty<Coin>()));
+        }
     }
 }

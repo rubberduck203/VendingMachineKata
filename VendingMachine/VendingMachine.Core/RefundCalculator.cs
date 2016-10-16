@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core
 {
@@ -50,6 +51,10 @@ namespace Vending.Core
 
         public bool CanMakeChange(int priceInCents, IEnumerable<Coin> vault)
         {
+            if (!vault.Any())
+            {
+                return false;
+            }
             return true;
         }
     }
