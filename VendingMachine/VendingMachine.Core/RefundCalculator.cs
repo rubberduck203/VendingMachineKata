@@ -86,15 +86,7 @@ namespace Vending.Core
                 }
             }
 
-            foreach (var count in coinCounts)
-            {
-                if (count.Value < 5)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return coinCounts.All(count => count.Value >= 5);
         }
     }
 }
