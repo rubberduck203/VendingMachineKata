@@ -31,6 +31,8 @@ The following display states exist:
    - It was implemented this way to centralize logic that would have otherwise had to have been implemented in each of the child classes.
    - Find a way to decouple it.
  - There are several missing states. A few of the states have `if...then` logic that should really be represented as different states unto themselves.
+ 
+ [5]:https://en.wikipedia.org/wiki/Greedy_algorithm
 
 # Build
 
