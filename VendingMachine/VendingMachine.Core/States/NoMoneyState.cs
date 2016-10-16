@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core.States
 {
     public class NoMoneyState : VendingMachineState
     {
         public NoMoneyState(VendingMachineState state)
-            :base(state.Context, state.ReturnTray, state.Coins, state.ProductInfoRepository, state.Output)
+            :base(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output, state.Vault)
         { }
 
-        public NoMoneyState(StateContext context, List<Coin> returnTray, List<Coin> coins, ProductInfoRepository productInfoRepository, List<string> output)
-            :base(context, returnTray, coins, productInfoRepository, output)
+        public NoMoneyState(StateContext context, List<Coin> returnTray, List<Coin> coinSlot, ProductInfoRepository productInfoRepository, List<string> output, List<Coin> vault)
+            :base(context, returnTray, coinSlot, productInfoRepository, output, vault)
         {
         }
 
         public override string Display()
         {
-            return "INSERT COIN";
+            var refundCalculator = new RefundCalculator();
+            return refundCalculator.CanMakeChange(Vault) ? "INSERT COIN" : "EXACT CHANGE ONLY";
         }
 
         protected override void DispenseCallback(string sku)

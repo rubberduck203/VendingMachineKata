@@ -59,7 +59,7 @@ namespace Vending.Tests.Core
         }
 
         [TestMethod]
-        public void RefundCalculator_Price50_Given80_Refund3Dimes()
+        public void RefundCalculator_Price50_Given80_Refund1QuarterAnd1Nickel()
         {
             var acutal = _refunder.CalculateRefund(50, 80);
             AssertRefund(acutal, nickels:1, dimes:0, quarters:1);

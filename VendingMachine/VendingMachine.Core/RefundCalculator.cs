@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Vending.Core
 {
@@ -6,12 +7,7 @@ namespace Vending.Core
     {
         public IDictionary<Coin, int> CalculateRefund(int priceInCents, int paidInCents)
         {
-            var refund = new Dictionary<Coin, int>()
-            {
-                {Coin.Nickel, 0},
-                {Coin.Dime, 0},
-                {Coin.Quarter, 0}
-            };
+            IDictionary<Coin, int> refund = EmptyCoinDictionary();
 
             var refundValue = paidInCents - priceInCents;
 
@@ -46,6 +42,50 @@ namespace Vending.Core
                 nickels -= (coinCount * nickelsPerCoin);
             }
             return nickels;
+        }
+
+        public bool CanMakeChange(IEnumerable<Coin> vault)
+        {
+            /*
+             * So, I could spend ages working out an algorithm to work this problem out
+             * for the generic case, or we can hard code a suboptimal solution that lets me 
+             * ship today.
+             * 
+             * TODO: Replace with smarter algorithm.
+             * Perhaps create a fallback algorithm for the CalculateRefund method, 
+             * or change it entirely to use the Greedy algorithm.
+             * 
+             * See Issues #6 & #14
+             */
+
+            IDictionary<Coin, int> coinCounts = EmptyCoinDictionary();
+
+            foreach (var coin in vault)
+            {
+                switch (coin)
+                {
+                    case Coin.Nickel:
+                    case Coin.Dime:
+                    case Coin.Quarter:
+                        coinCounts[coin]++;
+                        break;
+                    default:
+                        //do nothing with unsupported coins
+                        break;
+                }
+            }
+
+            return coinCounts.All(count => count.Value >= 5);
+        }
+
+        private static IDictionary<Coin, int> EmptyCoinDictionary()
+        {
+            return new Dictionary<Coin, int>()
+            {
+                {Coin.Nickel, 0},
+                {Coin.Dime, 0},
+                {Coin.Quarter, 0}
+            };
         }
     }
 }
