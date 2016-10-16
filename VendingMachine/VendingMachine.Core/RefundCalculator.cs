@@ -52,26 +52,46 @@ namespace Vending.Core
         public bool CanMakeChange(IEnumerable<Coin> vault)
         {
             /*
-             * So, we could spend ages working out an algorithm to work this problem out
+             * So, I could spend ages working out an algorithm to work this problem out
              * for the generic case, or we can hard code a suboptimal solution that lets me 
              * ship today.
              * 
              * TODO: Replace with smarter algorithm.
+             * Perhaps create a fallback algorithm for the CalculateRefund method, 
+             * or change it entirely to use the Greedy algorithm.
+             * 
+             * See Issue #
              */
 
-            if (vault.Count(c => c == Coin.Nickel) < 5)
+            var coinCounts = new Dictionary<Coin, int>()
             {
-                return false;
+                {Coin.Nickel, 0},
+                {Coin.Dime, 0},
+                {Coin.Quarter, 0}
+            };
+
+            foreach (var coin in vault)
+            {
+                switch (coin)
+                {
+                    case Coin.Nickel:
+                    case Coin.Dime:
+                    case Coin.Quarter:
+                        coinCounts[coin]++;
+                        break;
+                    default:
+                        //do nothing with unsupported coins
+                        break;
+                    
+                }
             }
 
-            if (vault.Count(c => c == Coin.Dime) < 5)
+            foreach (var count in coinCounts)
             {
-                return false;
-            }
-
-            if (vault.Count(c => c == Coin.Quarter) < 5)
-            {
-                return false;
+                if (count.Value < 5)
+                {
+                    return false;
+                }
             }
 
             return true;
