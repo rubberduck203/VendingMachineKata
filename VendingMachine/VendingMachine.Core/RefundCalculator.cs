@@ -47,5 +47,10 @@ namespace Vending.Core
             }
             return nickels;
         }
+
+        public bool CanMakeChange(int priceInCents, IEnumerable<Coin> vault)
+        {
+            return true;
+        }
     }
 }

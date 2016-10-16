@@ -31,5 +31,14 @@ namespace Vending.Tests.Core
             var vendingMachine = new VendingMachine(new InMemoryProductInfoRepository());
             Assert.AreEqual("INSERT COIN", vendingMachine.GetDisplayText());
         }
+
+        [TestMethod]
+        public void RefundCalculator_WhenPrice30_And2DimesInVault_CanMakeChange()
+        {
+            var calculator = new RefundCalculator();
+            var vault = Enumerable.Repeat(Coin.Dime, 2);
+
+            Assert.IsTrue(calculator.CanMakeChange(30, vault));
+        }
     }
 }
