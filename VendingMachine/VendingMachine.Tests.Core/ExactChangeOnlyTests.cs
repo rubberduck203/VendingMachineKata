@@ -47,5 +47,17 @@ namespace Vending.Tests.Core
             var calculator = new RefundCalculator();
             Assert.IsFalse(calculator.CanMakeChange(30, Enumerable.Empty<Coin>()));
         }
+
+        [TestMethod]
+        public void RefundCalculator_WhenPrice30_And4NickelsInVault_ExactChangeOnly()
+        {
+            /* 
+             * Even though we could make change with 4 Nickels, our refund calculator
+             * currently won't, even if it has 4 nickels, but not 2 dimes.
+             */
+
+            var calculator = new RefundCalculator();
+            Assert.IsFalse(calculator.CanMakeChange(30, Enumerable.Repeat(Coin.Nickel, 4)));
+        }
     }
 }
