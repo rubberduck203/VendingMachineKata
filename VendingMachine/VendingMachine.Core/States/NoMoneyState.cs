@@ -16,10 +16,12 @@ namespace Vending.Core.States
 
         public override string Display()
         {
-            if (Vault.Any(c => c == Coin.Dime || c == Coin.Nickel))
+            var refundCalculator = new RefundCalculator();
+            if (refundCalculator.CanMakeChange(Vault))
             {
                 return "INSERT COIN";
             }
+
             return "EXACT CHANGE ONLY";
         }
 
