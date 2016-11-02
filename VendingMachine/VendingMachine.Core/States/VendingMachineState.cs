@@ -5,10 +5,6 @@ namespace Vending.Core.States
 {
     public abstract class VendingMachineState
     {
-        protected VendingMachineState(VendingMachineState state)
-            :this(state.Context, state.ReturnTray, state.CoinSlot, state.ProductInfoRepository, state.Output, state.Vault)
-        { }
-
         protected VendingMachineState(StateContext context, List<Coin> returnTray, List<Coin> coinSlot, ProductInfoRepository productInfoRepository, List<string> output, List<Coin> vault)
         {
             Context = context;
